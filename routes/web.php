@@ -22,8 +22,12 @@ Route::get('/', function () {
 Route::get('/orders', [OrderController::class, 'show'])->name('orders');
 Route::get('/orders/{id}', [OrderController::class, 'show_detail']);
 
+// resi pengiriman
+Route::get('/printdetailpacking/{id}', [OrderDetailController::class, 'print_resi']);
+
 // export excel
 Route::get('/ordersdetails/export', [OrderDetailController::class, 'export_excel']);
 
 // update ongkir
 Route::post('/orders/ongkir', [OrderController::class, 'update_ongkir'])->name('update_ongkir');
+Route::post('/orders/resi', [OrderController::class, 'update_resi'])->name('update_resi');

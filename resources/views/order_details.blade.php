@@ -11,15 +11,17 @@
     $jumlah_item_boncu = 0;
     $jumlah_item_pretty = 0;
     $jumlah_item_xtreme = 0;
+    $urlClient = 'http://127.0.0.1:8000/storage/';
 @endphp
     
 <div class="section-header">
-    <h1>Orders # {{$id_order}} {{$agen}}</h1>
+    <h1>Orders # {{$id_order}} {{$agen->name}}</h1>
 </div>
 
 <div class="card card-info card-outline">
     <div class="card-header">  
-        <h4>Sancu</h4> <br><a class="btn btn-warning" href="/ordersdetails/export">Export Excel Sancu</a>
+        <h4>Sancu</h4>
+        {{--  <br><a class="btn btn-warning" href="/ordersdetails/export">Export Excel Sancu</a> --}}
     </div>
 
     <div class="card-body">
@@ -66,7 +68,7 @@
 <div class="card card-success card-outline">
     <div class="card-header">  
         <h4>Boncu</h4>
-        <button class="btn btn-warning">Export Excel Boncu</button>
+        {{-- <button class="btn btn-warning">Export Excel Boncu</button> --}}
     </div>
     
     <div class="card-body">
@@ -113,7 +115,7 @@
 <div class="card card-danger card-outline">
     <div class="card-header">  
         <h4>Pretty</h4>
-        <button class="btn btn-warning">Export Excel Pretty</button>
+        {{-- <button class="btn btn-warning">Export Excel Pretty</button> --}}
     </div>
 
     <div class="card-body">
@@ -160,7 +162,7 @@
 <div class="card card-dark card-outline">
     <div class="card-header">  
         <h4>Xtreme </h4>
-        <button class="btn btn-warning">Export Excel Xtreme</button>
+        {{-- <button class="btn btn-warning">Export Excel Xtreme</button> --}}
     </div>
 
     <div class="card-body">
@@ -206,10 +208,11 @@
 
 <div class="card card-info card-outline">
     <div class="card-header">  
-        <h4>Perhitungan</h4>
+        <h4>Detail Order</h4>
+        <a class="btn btn-info" href="/printdetailpacking/{{$id_order}}">Cetak Detail Packing</a>
     </div>
     <div class="card-body">
-        <table class="table table-sm">
+        <table class="table table-sm table-striped">
             <tbody>
                 <tr>
                     <td>Total Pembelian</td>
@@ -241,6 +244,8 @@
                         $jumlah_item_xtreme)*$coupon->potongan, '0', '.', ',') : 0
                     }}</td>
                 </tr>
+
+                {{-- ongkir --}}
                 <tr>
                     <td>Ongkir</td>
                     <td>
@@ -248,14 +253,79 @@
                             @csrf
                             <input type="hidden" name="orders_id" value="{{$id_order}}">
                             <div class="col-8">
-                                <input type="text" placeholder="Input Ongkir" value="{{$ongkir}}" class="form-control" name="ongkir">
+                                <input type="text" placeholder="Input Ongkir" value="{{$ongkir}}" class="form-control" name="ongkir" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
                             </div>
                             <div class="col-auto">
-                                <button type="submit" class="btn btn-info">Update</button>
+                                <button type="submit" class="btn btn-info" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>Update</button>
                             </div>
                         </form>
                     </td>
                 </tr>
+
+                <tr>
+                    <td>Grand Total</td>
+                    <td>
+                        : Rp{{number_format(
+                            ($jumlah_harga_sancu+
+                            $jumlah_harga_boncu+
+                            $jumlah_harga_pretty+
+                            $jumlah_harga_xtreme)
+                            +
+                            $ongkir
+                            -
+                            ($coupon != null ? 
+                            ($jumlah_item_sancu+
+                            $jumlah_item_boncu+
+                            $jumlah_item_pretty+
+                            $jumlah_item_xtreme)*$coupon->potongan : 0)
+                            , '0')
+                        }}
+
+                    </td>
+                </tr>
+
+                {{-- Bukti pembayaran --}}
+                @if($agen->status >= '3')
+                <tr>
+                    <td>Bukti Pembayaran</td>
+                    <td>
+                        <p>klik gambar untuk memperbesar</p>
+                        <a href="{{$urlClient}}{{$agen->bukti_bayar}}" target="_blank">
+                            <img class="img-thumbnail" style="max-width: 200px;" src="{{$urlClient}}{{$agen->bukti_bayar}}" alt="">
+                        </a>
+                    </td>
+                </tr>
+                {{-- Resi pengiriman --}}
+                <tr>
+                    <td>Resi Pengiriman</td>
+                    <td>
+                        <form action="{{route('update_resi')}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="orders_id" value="{{$id_order}}">
+                            <input class="form-control" type="file" name="file_resi" required @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
+
+                            @error('file_resi')
+                                <div class="alert alert-danger" role="alert">
+                                    {{$message}}
+                                </div>
+                            @enderror
+
+                            <span>Max Size: 2MB</span>
+                            <br>
+                            <br>
+
+                            <button type="submit" class="btn btn-success" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>Upload Resi Pengiriman</button>
+                        </form>
+
+                        @if($agen->status >= '4')
+                            <div class="col-12 mt-4">
+                                <img class="img-thumbnail" src="/storage/{{$agen->resi}}" alt="" style="max-width: 300px">
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+                @endif
+
             </tbody>
         </table>
     </div> <!-- end card-body -->

@@ -12,8 +12,8 @@
                 <th>No</th>
                 <th>Id Orders</th>
                 <th>Tanggal</th>
+                <th>DB</th>
                 <th>Status</th>
-                <th>Ongkir</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -26,13 +26,11 @@
                     <a href='/orders/{{$order->orders_id}}'>#{{$order->orders_id}} {{$order->name}}</a>
                 </td>
                 <td>{{$order->created_at}}</td>
+                <td>{{$order->name}}</td>
                 <td>
                     <span class="text-warning font-weight-bold">
                         {{$order->keterangan}}
                     </span>
-                </td>
-                <td>
-                    {{$order->ongkir}}
                 </td>
                 <td>
                     <a href="#" class="btn btn-success">

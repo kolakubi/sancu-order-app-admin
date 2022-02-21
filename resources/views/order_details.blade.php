@@ -18,6 +18,7 @@
     <h1>Orders # {{$id_order}} {{$agen->name}}</h1>
 </div>
 
+{{-- Sancu --}}
 <div class="card card-info card-outline">
     <div class="card-header">  
         <h4>Sancu</h4>
@@ -65,6 +66,8 @@
     </div>
 </div>
 
+{{-- Boncu --}}
+@if($data_boncu->count() > 0)
 <div class="card card-success card-outline">
     <div class="card-header">  
         <h4>Boncu</h4>
@@ -111,7 +114,10 @@
         </h6>
     </div>
 </div>
+@endif
 
+{{-- Pretty --}}
+@if($data_pretty->count() > 0)
 <div class="card card-danger card-outline">
     <div class="card-header">  
         <h4>Pretty</h4>
@@ -158,7 +164,10 @@
         </h6>
     </div>
 </div>
+@endif
 
+{{-- Xtreme --}}
+@if($data_xtreme->count() > 0)
 <div class="card card-dark card-outline">
     <div class="card-header">  
         <h4>Xtreme </h4>
@@ -205,6 +214,7 @@
         </h6>
     </div>
 </div>
+@endif
 
 <div class="card card-info card-outline">
     <div class="card-header">  

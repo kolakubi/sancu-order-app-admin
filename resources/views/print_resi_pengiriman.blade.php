@@ -23,7 +23,7 @@
         {{-- detail penerima --}}
         <div class="row">
             <div class="col-8">
-                <table class="table table-sm table-borderless">
+                <table class="table table-sm">
                     <tbody>
                         <tr>
                             <th>No Order</th>
@@ -108,5 +108,8 @@
     
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+        window.print();
+    </script>
 </body>
 </html>

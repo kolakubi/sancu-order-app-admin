@@ -94,7 +94,7 @@
                 @endphp
                 
                 <tr>
-                    <td>1</td>
+                    <td>{{$loop->iteration}}</td>
                     <td>{{$boncu->nama_produk}}</td>
                     <td>{{$boncu->size}}</td>
                     <td>{{$boncu->jumlah_produk}}</td>
@@ -144,7 +144,7 @@
                 @endphp
                 
                 <tr>
-                    <td>1</td>
+                    <td>{{$loop->iteration}}</td>
                     <td>{{$pretty->nama_produk}}</td>
                     <td>{{$pretty->size}}</td>
                     <td>{{$pretty->jumlah_produk}}</td>
@@ -194,7 +194,7 @@
                 @endphp
                 
                 <tr>
-                    <td>1</td>
+                    <td>{{$loop->iteration}}</td>
                     <td>{{$xtreme->nama_produk}}</td>
                     <td>{{$xtreme->size}}</td>
                     <td>{{$xtreme->jumlah_produk}}</td>

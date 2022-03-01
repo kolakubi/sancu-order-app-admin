@@ -11,6 +11,14 @@
 
     {{-- icon --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        body{
+            font-size: 10px!important;
+        }
+        .container{
+            max-width: 900px;
+        }
+    </style>
 </head>
 <body>
 

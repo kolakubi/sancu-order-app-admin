@@ -25,6 +25,32 @@
             <a href="{{route('orders')}}" class="nav-link"><i class="fas fa-pencil-alt"></i><span>Orders</span></a>
           </li>
 
+          {{-- Inventory --}}
+          {{-- ------------- --}}
+          <li class="menu-header">Inventory</li>
+          <li class="nav-item">
+            <a href="{{route('item')}}" class="nav-link"><i class="bi bi-gift"></i><span>Item</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link"><i class="bi bi-back"></i><span>Kategori</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('stok')}}" class="nav-link"><i class="bi bi-box"></i><span>Stok</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link"><i class="bi bi-arrow-repeat"></i><span>Kartu Stok</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link"><i class="bi bi-cash"></i><span>Harga</span></a>
+          </li>
+
+          {{-- Orders --}}
+          {{-- ------------- --}}
+          <li class="menu-header">User</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link"><i class="bi bi-person-fill"></i><span>Akun</span></a>
+          </li>
+
 
           {{-- <li class="menu-header">Starter</li>
           <li class="nav-item dropdown">

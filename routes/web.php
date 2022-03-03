@@ -28,10 +28,13 @@ Route::group(['middleware'=>'auth'], function(){
         return view('main');
     });
 
-    Route::get('/stok', [StokController::class, 'show'])->name('stok');
-    Route::get('/stok/edit/{id}', [StokController::class, 'show_edit_stok']);
+    Route::get('/update_item', [StokController::class, 'show'])->name('update_item');
+    Route::get('/update_item/edit/{id}', [StokController::class, 'show_update_item']);
+    Route::post('/update_item/edit/{id}', [StokController::class, 'update_edit_item']);
 
     Route::get('/item', [StokController::class, 'show_item'])->name('item');
+    Route::get('/tambahitem', [StokController::class, 'show_tambah_item'])->name('tambah_item');
+    Route::post('/tambahitem', [StokController::class, 'add_tambah_item']);
 
     Route::get('/orders', [OrderController::class, 'show'])->name('orders');
     Route::get('/orders/{id}', [OrderController::class, 'show_detail']);

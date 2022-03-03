@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="/assets/css/components.css">
   {{-- datatables CSS --}}
   <link rel="stylesheet" type="text/css" href="/sancu_assets/datatables/datatables.min.css"/>
+
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>

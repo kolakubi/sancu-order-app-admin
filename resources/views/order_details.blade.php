@@ -19,6 +19,7 @@
 </div>
 
 {{-- Sancu --}}
+@if($data_sancu->count() > 0)
 <div class="card card-info card-outline">
     <div class="card-header">  
         <h4>Sancu</h4>
@@ -65,6 +66,7 @@
         </h6>
     </div>
 </div>
+@endif
 
 {{-- Boncu --}}
 @if($data_boncu->count() > 0)

@@ -6,11 +6,11 @@
         <h1>Update Item</h1>
     </div>
 
-    <div class="row mb-4">
+    {{-- <div class="row mb-4">
         <div class="col-12">
             <a class="btn btn-info" href="{{route('import_stok_show')}}">Import Stok</a>
         </div>
-    </div>
+    </div> --}}
 
     <table class="table table-bordered" id="my_datatable">
         <thead>

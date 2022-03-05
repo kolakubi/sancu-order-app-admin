@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\StokController;
+use App\Http\Controllers\CouponController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,5 +52,9 @@ Route::group(['middleware'=>'auth'], function(){
 
     Route::get('/stok/import', [StokController::class, 'import_stok_show'])->name('import_stok_show');
     Route::post('/stok/import', [StokController::class, 'import_stok_save']);
+
+    Route::get('/coupon', [CouponController::class, 'show'])->name('coupon');
+    Route::get('/coupon/add', [CouponController::class, 'add_coupon_show'])->name('add_coupon');
+    Route::post('/coupon/add', [CouponController::class, 'add_coupon_create'])->name('add_coupon');
 
 });

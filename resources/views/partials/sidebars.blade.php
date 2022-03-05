@@ -9,15 +9,6 @@
         <a href="index.html">St</a>
       </div>
       <ul class="sidebar-menu">
-          <li class="menu-header">Dashboard</li>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
-            <ul class="dropdown-menu">
-              <li><a class="nav-link" href="index-0.html">General Dashboard</a></li>
-              <li><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
-            </ul>
-          </li>
-
           {{-- Orders --}}
           {{-- ------------- --}}
           <li class="menu-header">Order</li>
@@ -31,18 +22,25 @@
           <li class="nav-item">
             <a href="{{route('item')}}" class="nav-link"><i class="bi bi-gift"></i><span>Item</span></a>
           </li>
-          <li class="nav-item">
-            <a href="{{route('update_item')}}" class="nav-link"><i class="bi bi-box"></i><span>Update Item</span></a>
-          </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
+            <a href="{{route('update_item')}}" class="nav-link"><i class="bi bi-box"></i><span>Edit Item</span></a>
+          </li> --}}
+          {{-- <li class="nav-item">
             <a href="#" class="nav-link"><i class="bi bi-back"></i><span>Kategori</span></a>
-          </li>
+          </li> --}}
           <li class="nav-item">
             <a href="#" class="nav-link"><i class="bi bi-arrow-repeat"></i><span>Kartu Stok</span></a>
-          {{-- </li>
-          <li class="nav-item">
+          </li>
+          {{-- <li class="nav-item">
             <a href="#" class="nav-link"><i class="bi bi-cash"></i><span>Harga</span></a>
           </li> --}}
+
+          {{-- Promosi --}}
+          {{-- ------------- --}}
+          <li class="menu-header">Promosi</li>
+          <li class="nav-item">
+            <a href="{{route('coupon')}}" class="nav-link"><i class="bi bi-percent"></i><span>Coupon</span></a>
+          </li>
 
           {{-- Orders --}}
           {{-- ------------- --}}

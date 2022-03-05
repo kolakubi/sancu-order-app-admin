@@ -22,11 +22,6 @@
 </head>
 <body>
 
-    @php
-        $jumlah_harga_sancu = 0;
-        $jumlah_item_sancu = 0;
-    @endphp
-
     <div class="container">
         {{-- detail penerima --}}
         <div class="row">
@@ -65,7 +60,13 @@
             </div>
         </div>
 
-        {{-- detail pesanan --}}
+        {{-- detail pesanan sancu --}}
+        @php
+            $jumlah_harga_sancu = 0;
+            $jumlah_item_sancu = 0;
+        @endphp
+
+        @if($data_sancu->count() > 0)
         <div class="row">
             <h4 class="text-center">Sancu</h4>
             <div class="col-12">
@@ -107,6 +108,159 @@
                 </table>
             </div>
         </div>
+        @endif
+
+        {{-- detail pesanan boncu --}}
+        @php
+            $jumlah_harga_boncu = 0;
+            $jumlah_item_boncu = 0;
+        @endphp
+
+        @if($data_boncu->count() > 0)
+        <div class="row">
+            <h4 class="text-center">Boncu</h4>
+            <div class="col-12">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Model</th>
+                            <th>Size</th>
+                            <th>Jumlah (pack)</th>
+                            <th>Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data_boncu as $boncu)
+
+                        @php
+                            $jumlah_harga_boncu += ($boncu->jumlah_produk*$boncu->harga_produk);
+                            $jumlah_item_boncu += $boncu->jumlah_produk;
+                        @endphp
+                        
+                        <tr>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{$boncu->nama_produk}}</td>
+                            <td>{{$boncu->size}}</td>
+                            <td>{{$boncu->jumlah_produk}}</td>
+                            <td><i class="bi bi-square"></i></td>
+                        </tr>
+
+                        @endforeach
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>{{$jumlah_item_boncu}}</strong></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endif
+
+        {{-- detail pesanan pretty --}}
+        @php
+            $jumlah_harga_pretty = 0;
+            $jumlah_item_pretty = 0;
+        @endphp
+
+        @if($data_pretty->count() > 0)
+        <div class="row">
+            <h4 class="text-center">Pretty</h4>
+            <div class="col-12">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Model</th>
+                            <th>Size</th>
+                            <th>Jumlah (pack)</th>
+                            <th>Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data_pretty as $pretty)
+
+                        @php
+                            $jumlah_harga_pretty += ($pretty->jumlah_produk*$pretty->harga_produk);
+                            $jumlah_item_pretty += $pretty->jumlah_produk;
+                        @endphp
+                        
+                        <tr>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{$pretty->nama_produk}}</td>
+                            <td>{{$pretty->size}}</td>
+                            <td>{{$pretty->jumlah_produk}}</td>
+                            <td><i class="bi bi-square"></i></td>
+                        </tr>
+
+                        @endforeach
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>{{$jumlah_item_pretty}}</strong></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endif
+
+        {{-- detail pesanan xtreme --}}
+        @php
+            $jumlah_harga_xtreme = 0;
+            $jumlah_item_xtreme = 0;
+        @endphp
+
+        @if($data_xtreme->count() > 0)
+        <div class="row">
+            <h4 class="text-center">Xtreme</h4>
+            <div class="col-12">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Model</th>
+                            <th>Size</th>
+                            <th>Jumlah (pack)</th>
+                            <th>Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data_xtreme as $xtreme)
+
+                        @php
+                            $jumlah_harga_xtreme += ($xtreme->jumlah_produk*$xtreme->harga_produk);
+                            $jumlah_item_xtreme += $xtreme->jumlah_produk;
+                        @endphp
+                        
+                        <tr>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{$xtreme->nama_produk}}</td>
+                            <td>{{$xtreme->size}}</td>
+                            <td>{{$xtreme->jumlah_produk}}</td>
+                            <td><i class="bi bi-square"></i></td>
+                        </tr>
+
+                        @endforeach
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>{{$jumlah_item_xtreme}}</strong></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endif
+
+
         <div class="row mt-4">
             <p class="text-center"><span style="text-decoration: underline">Sancu Creative Indonesia</span><br>
                 Kolonel Sugiono No.55 AA, Ngeni, Kepuhkiriman, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256</p>

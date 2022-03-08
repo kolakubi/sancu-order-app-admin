@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,4 +58,9 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/coupon/add', [CouponController::class, 'add_coupon_show'])->name('add_coupon');
     Route::post('/coupon/add', [CouponController::class, 'add_coupon_create'])->name('add_coupon');
 
+    Route::get('/user', [UserController::class, 'show'])->name('user');
+    Route::get('/user/add', [UserController::class, 'add_user_show'])->name('add_user');
+    Route::post('/user/add', [UserController::class, 'add_user_create']);
+    Route::get('/user/edit/{id}', [UserController::class, 'edit_user_show']);
+    Route::post('/user/edit/{id}', [UserController::class, 'edit_user_update']);
 });

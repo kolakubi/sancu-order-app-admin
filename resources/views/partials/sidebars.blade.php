@@ -46,7 +46,7 @@
           {{-- ------------- --}}
           <li class="menu-header">User</li>
           <li class="nav-item">
-            <a href="#" class="nav-link"><i class="bi bi-person-fill"></i><span>Akun</span></a>
+            <a href="{{route('user')}}" class="nav-link"><i class="bi bi-person-fill"></i><span>Akun</span></a>
           </li>
 
 

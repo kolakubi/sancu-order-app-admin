@@ -11,7 +11,6 @@
     $jumlah_item_boncu = 0;
     $jumlah_item_pretty = 0;
     $jumlah_item_xtreme = 0;
-    $urlClient = 'http://127.0.0.1:8000/storage/';
 @endphp
     
 <div class="section-header">
@@ -257,12 +256,28 @@
                     }}</td>
                 </tr>
 
+                {{-- alamat pengiriman --}}
+                <tr>
+                    <td>Alamat pengiriman</td>
+                    <td>:
+                        {{$alamat->nama_lengkap}}<br>
+                        {{$alamat->telepon}}<br>
+                        {{$alamat->alamat_lengkap}}<br>
+                        {{$alamat->kecamatan}}, {{$alamat->kota_kabupaten}}, {{$alamat->propinsi}}, {{$alamat->kode_pos}}
+                    </td>
+                </tr>
+
                 {{-- ongkir --}}
                 <tr>
                     <td>Ongkir</td>
                     <td>
                         <form action="{{ route('update_ongkir') }}" method="post" class="row">
                             @csrf
+                            @error('ongkir')
+                                <div class="alert alert-danger" role="alert">
+                                    {{$message}}
+                                </div>
+                            @enderror
                             <input type="hidden" name="orders_id" value="{{$id_order}}">
                             <div class="col-8">
                                 <input type="text" placeholder="Input Ongkir" value="{{$ongkir}}" class="form-control" name="ongkir" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
@@ -302,8 +317,8 @@
                     <td>Bukti Pembayaran</td>
                     <td>
                         <p>klik gambar untuk memperbesar</p>
-                        <a href="{{$urlClient}}{{$agen->bukti_bayar}}" target="_blank">
-                            <img class="img-thumbnail" style="max-width: 200px;" src="{{$urlClient}}{{$agen->bukti_bayar}}" alt="">
+                        <a href="{{$client_host}}{{$agen->bukti_bayar}}" target="_blank">
+                            <img class="img-thumbnail" style="max-width: 200px;" src="{{$client_host}}{{$agen->bukti_bayar}}" alt="">
                         </a>
                     </td>
                 </tr>

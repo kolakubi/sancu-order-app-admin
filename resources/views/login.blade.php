@@ -21,11 +21,11 @@
   </head>
   <body style="background-color: #fafcfe">
 
-    <div class="container mt-4 mal-main-container d-flex flex-column align-items-center justify-content-center bg-light" style="height: 100vh;">
-        <img src="/assets/image/logo-sancu-300px.png" class="img mb-5" style="max-width: 150px;" />
+    <div class="container mt-4 d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
+        <img src="/assets/img/logo-sancu-300px.png" class="img mb-5" style="max-width: 150px;" />
         <h6>Login ke akun anda</h6>
 
-        <div class="row col-10">
+        <div class="row col-4">
 
           @if(session('message'))
             <div class="alert alert-danger" role="alert">

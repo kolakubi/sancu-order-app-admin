@@ -45,4 +45,12 @@ class Order extends Model
             ->first();
     }
 
+    public function get_alamat_kirim($id){
+        return $data = DB::table('orders')
+            ->select('*')
+            ->join('alamats', 'orders.id_alamat', '=', 'alamats.id')
+            ->where('orders.id', $id)
+            ->first();
+    }
+
 }

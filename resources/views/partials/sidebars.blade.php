@@ -1,12 +1,12 @@
 <div class="main-sidebar">
     <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
-        <a href="index.html">
+        <a href="/">
           <img src="/sancu_assets/img/logo-sancu-mini.png" alt="" class="img" style="max-width: 100px">
         </a>
       </div>
       <div class="sidebar-brand sidebar-brand-sm">
-        <a href="index.html">St</a>
+        <a href="/">St</a>
       </div>
       <ul class="sidebar-menu">
           {{-- Orders --}}
@@ -40,6 +40,9 @@
           <li class="menu-header">Promosi</li>
           <li class="nav-item">
             <a href="{{route('coupon')}}" class="nav-link"><i class="bi bi-percent"></i><span>Coupon</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link"><i class="bi bi-card-image"></i><span>Banner</span></a>
           </li>
 
           {{-- Orders --}}

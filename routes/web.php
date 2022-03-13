@@ -27,7 +27,7 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::group(['middleware'=>'auth'], function(){
 
     Route::get('/', function () {
-        return view('main');
+        return view('dashboard');
     });
 
     Route::get('/update_item', [StokController::class, 'show'])->name('update_item');

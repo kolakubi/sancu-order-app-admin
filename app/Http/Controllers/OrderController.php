@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 use App\Models\Order;
+use App\Models\Config;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    private $client_host;
+
+    public function __construct(){
+        $this->client_host=Config::where('nama', 'client_host')->get()[0]->nilai.'storage/';
+    }
+
     public function show(){
         $dataOrder = Order::get_all();
         // dd($dataOrder);
@@ -23,6 +30,9 @@ class OrderController extends Controller
         $dataPretty = Order::get_category_order($id, 3);
         $dataXtreme = Order::get_category_order($id, 4);
         $dataCoupon = Order::get_coupon_info($id);
+        $dataAlamat = Order::get_alamat_kirim($id);
+
+        // dd($dataAlamat);
 
         return view('order_details', [
             'title' => 'order detail',
@@ -33,11 +43,17 @@ class OrderController extends Controller
             'data_boncu' => $dataBoncu,
             'data_pretty' => $dataPretty,
             'data_xtreme' => $dataXtreme,
-            'coupon' => $dataCoupon
+            'coupon' => $dataCoupon,
+            'client_host' => $this->client_host,
+            'alamat' => $dataAlamat
         ]);
     }
 
     public function update_ongkir(Request $orders){
+        $this->validate($orders, [
+            'ongkir' => 'required|numeric|gt:0',
+        ]);
+
         // get status order
         $status = Order::where('id', $orders->orders_id)->first()->status;
 

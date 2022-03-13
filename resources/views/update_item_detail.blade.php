@@ -19,12 +19,22 @@
                     </div>
                 </div>
 
+                {{-- gambar produk --}}
+                <div class="form-group row">
+                    <label for="nama_produk" class="col-sm-3 col-form-label">*gambar produk</label>
+                    <div class="col-sm-9">
+                        <img src="/storage/{{$data_stok[0]->gambar_url_produk}}" alt="" class="img" style="max-width: 150px;">
+                        {{-- <input class="form-control mal-file-input" type="file" name="file_thumb" id="file_thumb"> --}}
+                    </div>
+                </div>
+
                 <table class="table text-center">
                     <thead>
                         <tr>
                             <th>Size</th>
                             <th>Stok</th>
                             <th>Harga</th>
+                            <th>Berat</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,6 +48,9 @@
                             </td>
                             <td>
                                 <input type="number" class="form-control harga" data-id_produk_detail="{{$stok->id_item_detail}}" value="{{$stok->harga_produk}}" required>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control berat" data-id_produk_detail="{{$stok->id_item_detail}}" value="{{$stok->berat}}" required>
                             </td>
                         </tr>
                         @endforeach
@@ -63,6 +76,8 @@
         let stokDetail = [];
         const harga = document.getElementsByClassName('harga');
         let hargaDetail = [];
+        const berat = document.getElementsByClassName('berat');
+        let beratDetail = [];
         form.addEventListener('submit', (e)=>{
             e.preventDefault();
 
@@ -82,11 +97,20 @@
                 })
             }
 
+            // simpan data berat ke array baru
+            for(let i=0; i<berat.length; i++){
+                beratDetail.push({
+                    'id_produk_detail': berat[i].dataset.id_produk_detail,
+                    'berat': berat[i].value,
+                })
+            }
+
             let dataJson = {
                 'id': '{{$data_stok[0]->id_produk}}',
                 'nama_produk': namaProduk.value,
                 'stok': stokDetail,
-                'harga': hargaDetail
+                'harga': hargaDetail,
+                'berat': beratDetail
             }
 
             // post request
@@ -124,7 +148,7 @@
                         title: 'Terjadi Kesalahan',
                         text: 'periksa kembali data',
                     }).then((result) => {
-                        location.reload();
+                        // location.reload();
                     })
                 }
             })

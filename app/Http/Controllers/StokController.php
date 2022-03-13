@@ -41,8 +41,19 @@ class StokController extends Controller
         //     1: {size: '24', stok: '100', harga: '12000'}
         // ]
 
+        $this->validate($request, [
+            'nama_produk' => 'required|max:255',
+            'kategori' => 'required|max:255',
+            'file' => 'required|image',
+            'detail_data' => 'required'
+        ]);
+
         // return json_decode($request->detail_data);
         $produk_details = json_decode($request->detail_data);
+
+        if(count($produk_details) < 1){
+            return json_encode(['status'=> 400, 'error' => 'tidak ada varian']); 
+        }
 
         // upload gambar
         $file_path = $request->file('file')->store('produk/thumbnail');
@@ -63,7 +74,7 @@ class StokController extends Controller
                 'size' => $produk_detail->size,
                 'jumlah_stok' => $produk_detail->stok,
                 'harga_produk' => $produk_detail->harga,
-                'berat' => 300
+                'berat' => $produk_detail->berat
             ]);
         }
 
@@ -131,6 +142,12 @@ class StokController extends Controller
         foreach($request->harga as $harga){
             Produk_detail::where('id', $harga['id_produk_detail'])
                 ->update(['harga_produk' => $harga['harga']]);
+        }
+
+        // update berat
+        foreach($request->berat as $berat){
+            Produk_detail::where('id', $berat['id_produk_detail'])
+                ->update(['berat' => $berat['berat']]);
         }
         
         // jika berhasil semua

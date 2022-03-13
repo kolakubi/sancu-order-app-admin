@@ -11,16 +11,20 @@
             <form action="" method="post" enctype="multipart/form-data" id="tambah_produk_form">
                 @csrf
                 <h5 class="text-center mb-3">Tambah Produk</h5>
+
+                {{-- nama_produk --}}
                 <div class="form-group row">
                     <label for="nama_produk" class="col-sm-3 col-form-label">*Nama Produk</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="nama_produk" name="nama_produk" required>
                     </div>
                 </div>
+
+                {{-- kategori --}}
                 <div class="form-group row">
-                    <label for="nama_produk" class="col-sm-3 col-form-label">*Kategori</label>
+                    <label for="kategori" class="col-sm-3 col-form-label">*Kategori</label>
                     <div class="col-sm-9">
-                        <select class="custom-select" id="kategori" required>
+                        <select class="custom-select" id="kategori" name="kategori" required>
                             <option value="0" selected>-Pilih Kategori-</option>
                             <option value="1">Sancu</option>
                             <option value="2">Boncu</option>
@@ -29,6 +33,8 @@
                           </select>
                     </div>
                 </div>
+
+                {{-- thumbnail --}}
                 <div class="form-group row">
                     <label for="nama_produk" class="col-sm-3 col-form-label">*Thumbnail</label>
                     <div class="col-sm-9">
@@ -42,6 +48,7 @@
                             <th>Size</th>
                             <th>Stok</th>
                             <th>Harga</th>
+                            <th>Berat(gram)</th>
                         </tr>
                     </thead>
                     <tbody id="mal_tbody">
@@ -54,6 +61,9 @@
                             </td>
                             <td>
                                 <input type="number" class="form-control harga" placeholder="harga" required>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control berat" placeholder="berat" required>
                             </td>
                             <td>
                                 <a onclick="delete_row(this)" class="btn" style="cursor: pointer"><i class="bi bi-trash"></i></a>
@@ -86,7 +96,7 @@
         // tambah row
         btn_tambah_pilihan.on('click', (e)=>{
             e.preventDefault();
-            tbody.append('<tr><td><input type="number" class="form-control size" placeholder="size" required></td><td><input type="number" class="form-control stok" placeholder="stok" required></td><td><input type="number" class="form-control harga" placeholder="harga" required></td><td><a onclick="delete_row(this)" class="btn" style="cursor: pointer"><i class="bi bi-trash"></i></a></td> </tr>');
+            tbody.append('<tr><td><input type="number" class="form-control size" placeholder="size" required></td><td><input type="number" class="form-control stok" placeholder="stok" required></td><td><input type="number" class="form-control harga" placeholder="harga" required></td><td><input type="number" class="form-control berat" placeholder="berat" required></td><td><a onclick="delete_row(this)" class="btn" style="cursor: pointer"><i class="bi bi-trash"></i></a></td> </tr>');
         })
 
         // hapus row
@@ -106,6 +116,7 @@
             let size = document.getElementsByClassName('size');
             let stok = document.getElementsByClassName('stok');
             let harga = document.getElementsByClassName('harga');
+            let berat = document.getElementsByClassName('berat');
             let fileThumb = document.getElementById('file_thumb');
             let detailData = [];
 
@@ -114,7 +125,8 @@
                 detailData.push({
                     'size': size[i].value,
                     'stok': stok[i].value,
-                    'harga': harga[i].value
+                    'harga': harga[i].value,
+                    'berat': berat[i].value,
                 })
             }
 
@@ -160,7 +172,7 @@
                         title: 'Terjadi Kesalahan',
                         text: 'periksa kembali data',
                     }).then((result) => {
-                        location.reload();
+                        // location.reload();
                     })
                 }
             })

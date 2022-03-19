@@ -26,34 +26,47 @@
         {{-- detail penerima --}}
         <div class="row">
             <div class="col-8">
-                <table class="table table-sm">
-                    <tbody>
-                        <tr>
-                            <th>No Order</th>
-                            <td>#{{$id_order}}</td>
-                        </tr>
-                        <tr>
-                            <th>Tanggal</th>
-                            <td>20 Februari 2022</td>
-                        </tr>
-                        <tr>
-                            <th>Nama</th>
-                            <td>{{$agen->name}}</td>
-                        </tr>
-                        <tr>
-                            <th>Alamat</th>
-                            <td>Jalan Persahabatan VI no 3-4, Ciracas, Jakarta Timur</td>
-                        </tr>
-                        <tr>
-                            <th>Telepon</th>
-                            <td>0856-1111-2222</td>
-                        </tr>
-                        <tr>
-                            <th>Ekspedisi</th>
-                            <td>Indah Cargo</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+                <div class="row">
+                    <div class="col-6">
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <th>No Order</th>
+                                    <td>#{{$id_order}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <td>20 Februari 2022</td>
+                                </tr>
+                                <tr>
+                                    <th>Nama</th>
+                                    <td>{{$agen->name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-6">
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <th>Alamat</th>
+                                    <td>Jalan Persahabatan VI no 3-4, Ciracas, Jakarta Timur</td>
+                                </tr>
+                                <tr>
+                                    <th>Telepon</th>
+                                    <td>0856-1111-2222</td>
+                                </tr>
+                                <tr>
+                                    <th>Ekspedisi</th>
+                                    <td>Indah Cargo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
             </div>
             <div class="col-4 d-flex align-items-center justify-content-center">
                 <img src="/sancu_assets/img/logo-sancu-mini.png" alt="" class="img">
@@ -68,16 +81,18 @@
 
         @if($data_sancu->count() > 0)
         <div class="row">
-            <h4 class="text-center">Sancu</h4>
+            <h4 class="">Sancu</h4>
             <div class="col-12">
-                <table class="table table-sm">
-                    <thead>
+                <table class="table table-sm table-bordered">
+                    <thead style="background: rgba(0,0,0,0.1);">
                         <tr>
                             <th>No</th>
                             <th>Model</th>
                             <th>Size</th>
                             <th>Jumlah (pack)</th>
-                            <th>Check</th>
+                            <th>Harga</th>
+                            <th>Check 1</th>
+                            <th>Check 2</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,6 +108,8 @@
                             <td>{{$sancu->nama_produk}}</td>
                             <td>{{$sancu->size}}</td>
                             <td>{{$sancu->jumlah_produk}}</td>
+                            <td>Rp {{number_format($sancu->harga_produk*$sancu->jumlah_produk, 0)}}</td>
+                            <td><i class="bi bi-square"></i></td>
                             <td><i class="bi bi-square"></i></td>
                         </tr>
 
@@ -102,6 +119,8 @@
                             <td></td>
                             <td></td>
                             <td><strong>{{$jumlah_item_sancu}}</strong></td>
+                            <td><strong>Rp {{number_format($jumlah_harga_sancu, 0)}}</strong></td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </tbody>
@@ -118,16 +137,18 @@
 
         @if($data_boncu->count() > 0)
         <div class="row">
-            <h4 class="text-center">Boncu</h4>
+            <h4 class="">Boncu</h4>
             <div class="col-12">
-                <table class="table table-sm">
-                    <thead>
+                <table class="table table-sm table-bordered">
+                    <thead style="background: rgba(0,0,0,0.1);">
                         <tr>
                             <th>No</th>
                             <th>Model</th>
                             <th>Size</th>
                             <th>Jumlah (pack)</th>
-                            <th>Check</th>
+                            <th>Harga</th>
+                            <th>Check 1</th>
+                            <th>Check 2</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,6 +164,8 @@
                             <td>{{$boncu->nama_produk}}</td>
                             <td>{{$boncu->size}}</td>
                             <td>{{$boncu->jumlah_produk}}</td>
+                            <td>Rp {{number_format($boncu->harga_produk*$boncu->jumlah_produk, 0)}}</td>
+                            <td><i class="bi bi-square"></i></td>
                             <td><i class="bi bi-square"></i></td>
                         </tr>
 
@@ -152,6 +175,8 @@
                             <td></td>
                             <td></td>
                             <td><strong>{{$jumlah_item_boncu}}</strong></td>
+                            <td><strong>Rp {{number_format($jumlah_harga_boncu, 0)}}</strong></td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </tbody>
@@ -168,16 +193,18 @@
 
         @if($data_pretty->count() > 0)
         <div class="row">
-            <h4 class="text-center">Pretty</h4>
+            <h4 class="">Pretty</h4>
             <div class="col-12">
-                <table class="table table-sm">
-                    <thead>
+                <table class="table table-sm table-bordered">
+                    <thead style="background: rgba(0,0,0,0.1);">
                         <tr>
                             <th>No</th>
                             <th>Model</th>
                             <th>Size</th>
                             <th>Jumlah (pack)</th>
-                            <th>Check</th>
+                            <th>Harga</th>
+                            <th>Check 1</th>
+                            <th>Check 2</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -193,6 +220,8 @@
                             <td>{{$pretty->nama_produk}}</td>
                             <td>{{$pretty->size}}</td>
                             <td>{{$pretty->jumlah_produk}}</td>
+                            <td>Rp {{number_format($pretty->harga_produk*$pretty->jumlah_produk, 0)}}</td>
+                            <td><i class="bi bi-square"></i></td>
                             <td><i class="bi bi-square"></i></td>
                         </tr>
 
@@ -202,6 +231,8 @@
                             <td></td>
                             <td></td>
                             <td><strong>{{$jumlah_item_pretty}}</strong></td>
+                            <td><strong>Rp {{number_format($jumlah_harga_pretty, 0)}}</strong></td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </tbody>
@@ -218,16 +249,18 @@
 
         @if($data_xtreme->count() > 0)
         <div class="row">
-            <h4 class="text-center">Xtreme</h4>
+            <h4 class="">Xtreme</h4>
             <div class="col-12">
-                <table class="table table-sm">
-                    <thead>
+                <table class="table table-sm table-bordered">
+                    <thead style="background: rgba(0,0,0,0.1);">
                         <tr>
                             <th>No</th>
                             <th>Model</th>
                             <th>Size</th>
                             <th>Jumlah (pack)</th>
-                            <th>Check</th>
+                            <th>Harga</th>
+                            <th>Check 1</th>
+                            <th>Check 2</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -243,6 +276,8 @@
                             <td>{{$xtreme->nama_produk}}</td>
                             <td>{{$xtreme->size}}</td>
                             <td>{{$xtreme->jumlah_produk}}</td>
+                            <td>Rp {{number_format($xtreme->harga_produk*$xtreme->jumlah_produk, 0)}}</td>
+                            <td><i class="bi bi-square"></i></td>
                             <td><i class="bi bi-square"></i></td>
                         </tr>
 
@@ -252,6 +287,8 @@
                             <td></td>
                             <td></td>
                             <td><strong>{{$jumlah_item_xtreme}}</strong></td>
+                            <td><strong>Rp {{number_format($jumlah_harga_xtreme, 0)}}</strong></td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </tbody>

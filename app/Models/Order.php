@@ -53,4 +53,16 @@ class Order extends Model
             ->first();
     }
 
+    public static function get_order_item_detail($id_order){
+        return $dataItem = DB::table('orders')
+            ->select('*', 'orders.id as id_order', 'orders.created_at as tgl_order')
+            ->where('id_order', $id_order)
+            ->join('order_details', 'orders.id', '=', 'order_details.id_order')
+            ->join('produk_details', 'order_details.id_produk_detail', '=', 'produk_details.id')
+            ->join('produks', 'produk_details.id_produk', '=', 'produks.id')
+            ->orderBy('produks.id')
+            ->orderBy('produk_details.size', 'DESC')
+            ->get();
+    }
+
 }

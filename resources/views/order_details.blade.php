@@ -11,6 +11,7 @@
     $jumlah_item_boncu = 0;
     $jumlah_item_pretty = 0;
     $jumlah_item_xtreme = 0;
+    $potongan_harga_langsung = (int)$alamat->potongan_harga_langsung;
 @endphp
     
 <div class="section-header">
@@ -61,7 +62,7 @@
             Total Pembelian Sancu:
             <strong>
                  Rp{{number_format($jumlah_harga_sancu, '0', '.', ',')}}
-            <strong>
+            </strong>
         </h6>
     </div>
 </div>
@@ -111,7 +112,7 @@
             Total Pembelian Boncu:
             <strong>
                  Rp{{number_format($jumlah_harga_boncu, '0', '.', ',')}}
-            <strong>
+            </strong>
         </h6>
     </div>
 </div>
@@ -161,7 +162,7 @@
             Total Pembelian Pretty:
             <strong>
                  Rp{{number_format($jumlah_harga_pretty, '0', '.', ',')}}
-            <strong>
+            </strong>
         </h6>
     </div>
 </div>
@@ -211,20 +212,36 @@
             Total Pembelian Xtreme:
             <strong>
                  Rp{{number_format($jumlah_harga_xtreme, '0', '.', ',')}}
-            <strong>
+            </strong>
         </h6>
     </div>
 </div>
 @endif
 
+
+{{-- Detail Order --}}
 <div class="card card-info card-outline">
     <div class="card-header">  
         <h4>Detail Order</h4>
-        <a class="btn btn-info" href="/printdetailpacking/{{$id_order}}">Cetak Detail Packing</a>
     </div>
     <div class="card-body">
         <table class="table table-sm table-striped">
             <tbody>
+                {{-- batalkan pesanan --}}
+                @if($alamat->status == "1" || $alamat->status == "2")
+                <tr>
+                    <td>Batalkan Pesanan</td>
+                    <td>
+                        <a id="batalkan_order" data-idorder="{{$id_order}}" onclick="batalkan_pesanan(this)" href="#" class="btn btn-danger">Batalkan Pesanan</a>
+                    </td>
+                </tr>
+                @endif
+                <tr style="border-bottom: 2px solid black;">
+                    <td>Cetak Detail Packing</td>
+                    <td>
+                        <a href="/printdetailpacking/{{$id_order}}" class="btn btn-info">Cetak Detail Packing</a>
+                    </td>
+                </tr>
                 <tr>
                     <td>Total Pembelian</td>
                     <td>: Rp{{
@@ -245,7 +262,7 @@
                     <td>: Rp{{$coupon != null ? number_format($coupon->potongan, '0', '.', ',') : 0}} / psg</td>
                 </tr>
                 <tr>
-                    <td>Total potongan harga</td>
+                    <td>Total potongan harga Kupon</td>
                     <td>: Rp{{
                         $coupon != null ? 
                         number_format((
@@ -257,7 +274,7 @@
                 </tr>
 
                 {{-- alamat pengiriman --}}
-                <tr>
+                <tr style="border-bottom: 2px solid black;">
                     <td>Alamat pengiriman</td>
                     <td>:
                         {{$alamat->nama_lengkap}}<br>
@@ -268,44 +285,118 @@
                 </tr>
 
                 {{-- ongkir --}}
-                <tr>
-                    <td>Ongkir</td>
-                    <td>
-                        <form action="{{ route('update_ongkir') }}" method="post" class="row">
-                            @csrf
+                <form action="{{ route('update_ongkir') }}" method="post" class="row">
+                    @csrf
+                    <input type="hidden" name="orders_id" value="{{$id_order}}">
+                    <tr>
+                        <td>Ongkir</td>
+                        <td>
                             @error('ongkir')
                                 <div class="alert alert-danger" role="alert">
                                     {{$message}}
                                 </div>
                             @enderror
-                            <input type="hidden" name="orders_id" value="{{$id_order}}">
+                            
                             <div class="col-8">
                                 <input type="text" placeholder="Input Ongkir" value="{{$ongkir}}" class="form-control" name="ongkir" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ekspedisi</td>
+                        <td>
+                            @error('ekspedisi')
+                                <div class="alert alert-danger" role="alert">
+                                    {{$message}}
+                                </div>
+                            @enderror
+                            <div class="col-8">
+                                <input type="text" placeholder="Input ekspedisi" value="{{$alamat->ekspedisi}}" class="form-control" name="ekspedisi" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
                             </div>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom: 2px solid black;">
+                        <td></td>
+                        <td>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-info" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>Update</button>
+                            </div>     
+                        </td>
+                    </tr>
+                </form>
+
+                {{-- potongan harga langsung --}}
+                <form action="{{ route('update_potongan_harga_langsung') }}" method="post" class="row">
+                    @csrf
+                    <input type="hidden" name="orders_id" value="{{$id_order}}">
+                    <tr>
+                        <td>Potongan harga langsung</td>
+                        <td>
+                            @error('potongan_harga_langsung')
+                                <div class="alert alert-danger" role="alert">
+                                    {{$message}}
+                                </div>
+                            @enderror
+                            
+                            <div class="col-8">
+                                <input type="text" placeholder="Input Potongan harga" value="{{$potongan_harga_langsung}}" class="form-control" name="potongan_harga_langsung" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Keterangan</td>
+                        <td>
+                            @error('keterangan_potongan_harga_langsung')
+                                <div class="alert alert-danger" role="alert">
+                                    {{$message}}
+                                </div>
+                            @enderror
+                            
+                            <div class="col-8">
+                                <input type="text" placeholder="keterangan porongan harga..." value="{{$alamat->keterangan_potongan_harga_langsung}}" class="form-control" name="keterangan_potongan_harga_langsung" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom: 2px solid black;">
+                        <td></td>
+                        <td>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-info" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>Update</button>
                             </div>
-                        </form>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                </form>
 
-                <tr>
+                {{-- grand total --}}
+                <tr style="border-bottom: 2px solid black;">
                     <td>Grand Total</td>
                     <td>
-                        : Rp{{number_format(
-                            ($jumlah_harga_sancu+
-                            $jumlah_harga_boncu+
-                            $jumlah_harga_pretty+
-                            $jumlah_harga_xtreme)
-                            +
-                            $ongkir
-                            -
-                            ($coupon != null ? 
-                            ($jumlah_item_sancu+
-                            $jumlah_item_boncu+
-                            $jumlah_item_pretty+
-                            $jumlah_item_xtreme)*$coupon->potongan : 0)
-                            , '0')
+                        : Rp
+                            {{number_format(
+                                (
+                                    $jumlah_harga_sancu+
+                                    $jumlah_harga_boncu+
+                                    $jumlah_harga_pretty+
+                                    $jumlah_harga_xtreme
+                                )
+                                +
+                                $ongkir
+                                -
+                                (
+                                    $coupon != null ? 
+                                    (
+                                        $jumlah_item_sancu+
+                                        $jumlah_item_boncu+
+                                        $jumlah_item_pretty+
+                                        $jumlah_item_xtreme
+                                    )
+                                    *
+                                    $coupon->potongan : 0
+                                )
+                                -
+                                $potongan_harga_langsung
+                                , '0'
+                            )
                         }}
 
                     </td>
@@ -313,7 +404,7 @@
 
                 {{-- Bukti pembayaran --}}
                 @if($agen->status >= '3')
-                <tr>
+                <tr style="border-bottom: 2px solid black;">
                     <td>Bukti Pembayaran</td>
                     <td>
                         <p>klik gambar untuk memperbesar</p>
@@ -357,5 +448,57 @@
         </table>
     </div> <!-- end card-body -->
 </div>
+
+{{-- sweet alert --}}
+<script src="/assets/sweet-alert/sweetalert2.all.min.js"></script>
+<script>
+    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    function batalkan_pesanan(elem){
+        elem.preventDevault;
+        let idPesanan = elem.dataset.idorder;
+
+        Swal.fire({
+            icon: 'question',
+            title: 'Yakin ingin membatalkan order ini',
+            showDenyButton: true,
+            confirmButtonText: 'Ya',
+            denyButtonText: `Tidak`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // ajax ke pengecekan stok
+                fetch("/orders/batal", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                        },
+                    method: "POST", 
+                    credentials: "same-origin",
+                    body: idPesanan
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    if(data.status == '200'){
+                        Swal.fire('Saved!', '', 'success')
+                        .then((result)=>{
+                            location.reload();
+                        })
+                    }
+                    else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ada kesalahan',
+                        })
+                    }
+                    console.log(data);
+                })
+            }
+        })
+    }
+    
+</script>
 
 @endsection

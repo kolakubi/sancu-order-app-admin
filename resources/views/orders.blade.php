@@ -21,14 +21,14 @@
 
             @foreach($orders as $order)
             <tr>
-                <td>1</td>
+                <td>{{$loop->iteration}}</td>
                 <td>
                     <a href='/orders/{{$order->orders_id}}'>#{{$order->orders_id}} {{$order->name}}</a>
                 </td>
                 <td>{{$order->created_at}}</td>
                 <td>{{$order->name}}</td>
                 <td>
-                    <span class="text-warning font-weight-bold">
+                    <span class="font-weight-bold @if($order->status == '5') text-success @elseif($order->status == '0') text-danger @else text-warning @endif">
                         {{$order->keterangan}}
                     </span>
                 </td>

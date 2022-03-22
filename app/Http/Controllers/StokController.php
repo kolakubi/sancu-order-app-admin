@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Stok;
 use App\Models\Produk;
 use App\Models\Produk_detail;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\StokImport;
@@ -29,8 +30,11 @@ class StokController extends Controller
     }
 
     public function show_tambah_item(){
+        $categories = Category::all();
+
         return view('tambah_item', [
             'title' => 'Tambah Item',
+            'categories' => $categories
         ]);
     }
 

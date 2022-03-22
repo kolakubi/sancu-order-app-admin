@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="section-header">
-        <h1>Produk</h1>
+        <h1>{{$title}}</h1>
     </div>
 
     <div class="row d-flex align-items-center justify-content-center">
@@ -26,10 +26,9 @@
                     <div class="col-sm-9">
                         <select class="custom-select" id="kategori" name="kategori" required>
                             <option value="0" selected>-Pilih Kategori-</option>
-                            <option value="1">Sancu</option>
-                            <option value="2">Boncu</option>
-                            <option value="3">Pretty</option>
-                            <option value="4">Xtreme</option>
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->nama_category}}</option>
+                            @endforeach
                           </select>
                     </div>
                 </div>

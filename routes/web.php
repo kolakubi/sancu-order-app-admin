@@ -7,6 +7,8 @@ use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\WhatsappController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,12 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/tambahitem', [StokController::class, 'show_tambah_item'])->name('tambah_item');
     Route::post('/tambahitem', [StokController::class, 'add_tambah_item']);
 
+    Route::get('/category', [CategoryController::class, 'show'])->name('category');
+    Route::get('/category/add', [CategoryController::class, 'show_add'])->name('add_category');
+    Route::post('/category/add', [CategoryController::class, 'create']);
+    Route::get('/category/update/{id}', [CategoryController::class, 'show_update'])->name('update_category');
+    Route::patch('/category/update/{id}', [CategoryController::class, 'update']);
+
     Route::get('/orders', [OrderController::class, 'show'])->name('orders');
     Route::get('/orders/{id}', [OrderController::class, 'show_detail']);
      // update ongkir
@@ -45,6 +53,9 @@ Route::group(['middleware'=>'auth'], function(){
     Route::post('/orders/potongan_harga_langsung', [OrderController::class, 'update_potongan_harga_langsung'])->name('update_potongan_harga_langsung');
     Route::post('/orders/resi', [OrderController::class, 'update_resi'])->name('update_resi');
     Route::post('/orders/batal', [OrderController::class, 'order_batal']);
+
+    Route::get('/whatsapp', [WhatsappController::class, 'show'])->name('whatsapp');
+    Route::post('/whatsapp', [WhatsappController::class, 'update']);
 
     // resi pengiriman
     Route::get('/printdetailpacking/{id}', [OrderDetailController::class, 'print_resi']);

@@ -5,6 +5,7 @@ use App\Models\Order;
 use App\Models\Order_detail;
 use App\Models\Config;
 use App\Models\Kartu_stok;
+use App\Models\Whatsapp;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -17,11 +18,13 @@ class OrderController extends Controller
 
     public function show(){
         $dataOrder = Order::get_all();
+        $whatsapps = Whatsapp::all();
         // dd($dataOrder);
 
         return view('orders', [
             'title' => 'orders',
-            'orders' => $dataOrder
+            'orders' => $dataOrder,
+            'whatsapps' => $whatsapps
         ]);
     }
 

@@ -15,6 +15,9 @@
           <li class="nav-item">
             <a href="{{route('orders')}}" class="nav-link"><i class="fas fa-pencil-alt"></i><span>Orders</span></a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('whatsapp')}}" class="nav-link"><i class="bi bi-whatsapp"></i><span>Whatsapp</span></a>
+          </li>
 
           {{-- Inventory --}}
           {{-- ------------- --}}
@@ -22,18 +25,12 @@
           <li class="nav-item">
             <a href="{{route('item')}}" class="nav-link"><i class="bi bi-gift"></i><span>Item</span></a>
           </li>
-          {{-- <li class="nav-item">
-            <a href="{{route('update_item')}}" class="nav-link"><i class="bi bi-box"></i><span>Edit Item</span></a>
-          </li> --}}
-          {{-- <li class="nav-item">
-            <a href="#" class="nav-link"><i class="bi bi-back"></i><span>Kategori</span></a>
-          </li> --}}
+          <li class="nav-item">
+            <a href="{{route('category')}}" class="nav-link"><i class="bi bi-diagram-2"></i><span>Category</span></a>
+          </li>
           <li class="nav-item">
             <a href="#" class="nav-link"><i class="bi bi-arrow-repeat"></i><span>Kartu Stok</span></a>
           </li>
-          {{-- <li class="nav-item">
-            <a href="#" class="nav-link"><i class="bi bi-cash"></i><span>Harga</span></a>
-          </li> --}}
 
           {{-- Promosi --}}
           {{-- ------------- --}}

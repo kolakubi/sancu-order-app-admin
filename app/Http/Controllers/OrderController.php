@@ -30,27 +30,20 @@ class OrderController extends Controller
 
     public function show_detail($id){
         $agenName = Order::get_agen_name($id);
-        $dataSancu = Order::get_category_order($id, 1);
-        $dataBoncu = Order::get_category_order($id, 2);
-        $dataPretty = Order::get_category_order($id, 3);
-        $dataXtreme = Order::get_category_order($id, 4);
         $dataCoupon = Order::get_coupon_info($id);
         $dataAlamat = Order::get_alamat_kirim($id);
-
-        // dd($dataAlamat);
+        $orders = Order::get_detail_by_id($id);
+        // dd($orders);
 
         return view('order_details', [
             'title' => 'order detail',
             'agen' => $agenName[0],
             'id_order' => $id,
             'ongkir' => $agenName[0]->ongkir,
-            'data_sancu' => $dataSancu,
-            'data_boncu' => $dataBoncu,
-            'data_pretty' => $dataPretty,
-            'data_xtreme' => $dataXtreme,
             'coupon' => $dataCoupon,
             'client_host' => $this->client_host,
-            'alamat' => $dataAlamat
+            'alamat' => $dataAlamat,
+            'orders' => $orders
         ]);
     }
 
@@ -62,7 +55,6 @@ class OrderController extends Controller
 
         // get status order
         $status = Order::where('id', $orders->orders_id)->first()->status;
-
         // jika status 1
         // atau 'menunggu ongkir'
         // update menjadi 2 atau 'proses'
@@ -87,18 +79,13 @@ class OrderController extends Controller
                 ]
             );
         }
-
         return redirect()->back();
     } // end of function update_ongkir
 
     public function update_potongan_harga_langsung(Request $request){
-
-        // dd($request);
-
         $this->validate($request, [
             'potongan_harga_langsung' => 'required|numeric|gt:0',
         ]);
-
         Order::where('id', $request->orders_id)
             ->update(
                 [
@@ -106,7 +93,6 @@ class OrderController extends Controller
                     'keterangan_potongan_harga_langsung' => $request->keterangan_potongan_harga_langsung
                 ]
             );
-
         return redirect()->back();
     }
 
@@ -144,10 +130,10 @@ class OrderController extends Controller
         // update kartu stok
         foreach($detail_item as $item){
             Kartu_stok::create([
-                'id_order' => $item->id_order,
                 'id_produk_detail' => $item->id_produk_detail,
                 'status' => 'in',
-                'keterangan' => 'pembatalan order agen',
+                'jumlah' => $item->jumlah_produk,
+                'keterangan' => 'pembatalan order agen no #'.$item->id_order,
             ]);
 
             // update stok items

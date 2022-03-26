@@ -5,6 +5,7 @@ use App\Models\Stok;
 use App\Models\Produk;
 use App\Models\Produk_detail;
 use App\Models\Category;
+use App\Models\Kartu_stok;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\StokImport;
@@ -13,7 +14,6 @@ class StokController extends Controller
 {
     public function show(){
         $data_stok = Stok::get_all();
-
         return view('update_item', [
             'title' => 'Update Item',
             'stoks' => $data_stok
@@ -22,7 +22,6 @@ class StokController extends Controller
 
     public function show_item(){
         $data_item = Stok::get_all();
-
         return view('item', [
             'title' => 'Item',
             'items' => $data_item
@@ -31,7 +30,6 @@ class StokController extends Controller
 
     public function show_tambah_item(){
         $categories = Category::all();
-
         return view('tambah_item', [
             'title' => 'Tambah Item',
             'categories' => $categories
@@ -44,17 +42,14 @@ class StokController extends Controller
         //     0: {size: '21', stok: '100', harga: '12000'}
         //     1: {size: '24', stok: '100', harga: '12000'}
         // ]
-
         $this->validate($request, [
             'nama_produk' => 'required|max:255',
             'kategori' => 'required|max:255',
             'file' => 'required|image',
             'detail_data' => 'required'
         ]);
-
         // return json_decode($request->detail_data);
         $produk_details = json_decode($request->detail_data);
-
         if(count($produk_details) < 1){
             return json_encode(['status'=> 400, 'error' => 'tidak ada varian']); 
         }
@@ -81,7 +76,6 @@ class StokController extends Controller
                 'berat' => $produk_detail->berat
             ]);
         }
-
         // jika berhasil semua
         return json_encode(['status'=> 200]);
     }
@@ -95,7 +89,6 @@ class StokController extends Controller
     public function import_stok_save(Request $request){
         // dd($request->file('excel'));
         Excel::import(new StokImport, $request->file('file-import'));
-
         return redirect()->back();
     }
 
@@ -103,7 +96,6 @@ class StokController extends Controller
         // ambil stok berdasarkan id
         $data_stok = Stok::get_stok($id);
         // dd($data_stok);
-
         return view('update_item_detail', [
             'title' => 'Edit Item Detail',
             'data_stok' => $data_stok
@@ -129,7 +121,6 @@ class StokController extends Controller
         //         ]
         // }
         // return $request->nama_produk;
-
         // update attribut lain
         Produk::where('id', $request->id)
             ->update([
@@ -154,6 +145,90 @@ class StokController extends Controller
                 ->update(['berat' => $berat['berat']]);
         }
         
+        // jika berhasil semua
+        return json_encode(['status'=> 200]);
+    }
+
+    public function stok_masuk_show(){
+        $items = Stok::get_all();
+        return view('stok_masuk', [
+            'title' => 'Stok Masuk',
+            'items' => $items
+        ]);
+    }
+
+    public function stok_masuk_add_show($id){
+        // ambil stok berdasarkan id
+        $data_stok = Stok::get_stok($id);
+        // dd($data_stok);
+        return view('stok_masuk_add', [
+            'title' => 'Stok Masuk Add',
+            'data_stok' => $data_stok
+        ]);
+    }
+
+    public function stok_masuk_add(Request $request){
+        // dd($request->stok_masuk);
+        // update stok
+        foreach($request->total_stok as $total_stok){
+            Produk_detail::where('id', $total_stok['id_produk_detail'])
+                ->update(['jumlah_stok' => $total_stok['stok']]);
+        }
+
+        // simpan ke kartu stok
+        // jika data stok masuk > 0
+        foreach($request->stok_masuk as $stok_masuk){
+            if($stok_masuk['stok'] > 0){
+                Kartu_stok::create([
+                    'id_produk_detail' => $stok_masuk['id_produk_detail'],
+                    'status' => 'in',
+                    'jumlah' => $stok_masuk['stok'],
+                    'keterangan' => 'Stok masuk'
+                ]);
+            }
+        }
+        // jika berhasil semua
+        return json_encode(['status'=> 200]);
+    }
+
+    public function stok_keluar_show(){
+        $items = Stok::get_all();
+        return view('stok_keluar', [
+            'title' => 'Stok Keluar',
+            'items' => $items
+        ]);
+    }
+
+    public function stok_keluar_add_show($id){
+        // ambil stok berdasarkan id
+        $data_stok = Stok::get_stok($id);
+        // dd($data_stok);
+        return view('stok_keluar_add', [
+            'title' => 'Stok Keluar Add',
+            'data_stok' => $data_stok
+        ]);
+    }
+
+    public function stok_keluar_add(Request $request){
+        // dd($request->stok_masuk);
+        // update stok
+        foreach($request->total_stok as $total_stok){
+            Produk_detail::where('id', $total_stok['id_produk_detail'])
+                ->update(['jumlah_stok' => $total_stok['stok']]);
+        }
+
+        // simpan ke kartu stok
+        // jika data stok masuk > 0
+        foreach($request->stok_keluar as $stok_keluar){
+            if($stok_keluar['stok'] > 0){
+                Kartu_stok::create([
+                    'id_produk_detail' => $stok_keluar['id_produk_detail'],
+                    'status' => 'out',
+                    'jumlah' => $stok_keluar['stok'],
+                    'keterangan' => 'Stok Hilang/Rusak'
+                ]);
+            }
+        }
         // jika berhasil semua
         return json_encode(['status'=> 200]);
     }

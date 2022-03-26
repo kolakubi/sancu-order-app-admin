@@ -9,6 +9,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WhatsappController;
+use App\Http\Controllers\KartuStokController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,13 +33,13 @@ Route::group(['middleware'=>'auth'], function(){
         return view('dashboard');
     });
 
-    Route::get('/update_item', [StokController::class, 'show'])->name('update_item');
-    Route::get('/update_item/edit/{id}', [StokController::class, 'show_update_item']);
-    Route::post('/update_item/edit/{id}', [StokController::class, 'update_edit_item']);
-
     Route::get('/item', [StokController::class, 'show_item'])->name('item');
     Route::get('/tambahitem', [StokController::class, 'show_tambah_item'])->name('tambah_item');
     Route::post('/tambahitem', [StokController::class, 'add_tambah_item']);
+
+    // Route::get('/update_item', [StokController::class, 'show'])->name('update_item');
+    Route::get('/update_item/edit/{id}', [StokController::class, 'show_update_item']);
+    Route::post('/update_item/edit/{id}', [StokController::class, 'update_edit_item']);
 
     Route::get('/category', [CategoryController::class, 'show'])->name('category');
     Route::get('/category/add', [CategoryController::class, 'show_add'])->name('add_category');
@@ -46,9 +47,19 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/category/update/{id}', [CategoryController::class, 'show_update'])->name('update_category');
     Route::patch('/category/update/{id}', [CategoryController::class, 'update']);
 
+    Route::get('/stok_masuk', [StokController::class, 'stok_masuk_show'])->name('stok_masuk');
+    Route::get('/stok_masuk/add/{id}', [StokController::class, 'stok_masuk_add_show']);
+    Route::post('/stok_masuk/add/{id}', [StokController::class, 'stok_masuk_add']);
+
+    Route::get('/stok_keluar', [StokController::class, 'stok_keluar_show'])->name('stok_keluar');
+    Route::get('/stok_keluar/add/{id}', [StokController::class, 'stok_keluar_add_show']);
+    Route::post('/stok_keluar/add/{id}', [StokController::class, 'stok_keluar_add']);
+
+    Route::get('/kartu_stok', [KartuStokController::class, 'kartu_stok_show'])->name('kartu_stok');
+
     Route::get('/orders', [OrderController::class, 'show'])->name('orders');
     Route::get('/orders/{id}', [OrderController::class, 'show_detail']);
-     // update ongkir
+    // update ongkir
     Route::post('/orders/ongkir', [OrderController::class, 'update_ongkir'])->name('update_ongkir');
     Route::post('/orders/potongan_harga_langsung', [OrderController::class, 'update_potongan_harga_langsung'])->name('update_potongan_harga_langsung');
     Route::post('/orders/resi', [OrderController::class, 'update_resi'])->name('update_resi');
@@ -58,7 +69,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::post('/whatsapp', [WhatsappController::class, 'update']);
 
     // resi pengiriman
-    Route::get('/printdetailpacking/{id}', [OrderDetailController::class, 'print_resi']);
+    Route::get('/printdetailpacking/{id}', [OrderDetailController::class, 'print_detail_packing']);
 
     // export excel
     Route::get('/ordersdetails/export', [OrderDetailController::class, 'export_excel']);

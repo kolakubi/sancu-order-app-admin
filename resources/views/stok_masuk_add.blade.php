@@ -13,11 +13,12 @@
                 <h5 class="text-center mb-3">Informasi Produk</h5>
                 <input type="hidden" name="id_produk" value="{{$data_stok[0]->id_produk}}">
                 <div class="form-group row">
-                    <label for="nama_produk" class="col-sm-3 col-form-label">*Nama Produk</label>
+                    <label for="nama_produk" class="col-sm-3 col-form-label">Nama Produk</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nama_produk" name="nama_produk" value="{{$data_stok[0]->nama_produk}}" required>
+                        <input type="text" class="form-control" id="nama_produk" name="nama_produk" value="{{$data_stok[0]->nama_produk}}" readonly>
                     </div>
                 </div>
+
                 <div class="form-group row">
                     <label for="category" class="col-sm-3 col-form-label">Merk</label>
                     <div class="col-sm-9">
@@ -38,9 +39,8 @@
                     <thead>
                         <tr>
                             <th>Size</th>
-                            <th>Stok</th>
-                            <th>Harga</th>
-                            <th>Berat</th>
+                            <th>Stok Sekarang (pack)</th>
+                            <th>Stok Masuk (pack)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,13 +50,10 @@
                                 {{$stok->size}}
                             </td>
                             <td>
-                                <input type="number" class="form-control stok" data-id_produk_detail="{{$stok->id_item_detail}}" value="{{$stok->jumlah_stok}}" required>
+                                <input type="number" class="form-control stok" data-id_produk_detail="{{$stok->id_item_detail}}" value="{{$stok->jumlah_stok}}" disabled>
                             </td>
                             <td>
-                                <input type="number" class="form-control harga" data-id_produk_detail="{{$stok->id_item_detail}}" value="{{$stok->harga_produk}}" required>
-                            </td>
-                            <td>
-                                <input type="number" class="form-control berat" data-id_produk_detail="{{$stok->id_item_detail}}" value="{{$stok->berat}}" required>
+                                <input type="number" class="form-control stok_masuk" data-id_produk_detail="{{$stok->id_item_detail}}" value="0" required>
                             </td>
                         </tr>
                         @endforeach
@@ -78,51 +75,40 @@
     <script>
         const form = document.getElementById('update_produk_form');
         const namaProduk = document.getElementById('nama_produk');
-        const stok = document.getElementsByClassName('stok');
-        let stokDetail = [];
-        const harga = document.getElementsByClassName('harga');
-        let hargaDetail = [];
-        const berat = document.getElementsByClassName('berat');
-        let beratDetail = [];
+        const stokElem = document.getElementsByClassName('stok');
+        const stokMasukElem = document.getElementsByClassName('stok_masuk');
+        let stokMasuk = [];
+        let totalStok = [];
         form.addEventListener('submit', (e)=>{
             e.preventDefault();
 
-            // simpan data size ke array baru
-            for(let i=0; i<stok.length; i++){
-                stokDetail.push({
-                    'id_produk_detail': stok[i].dataset.id_produk_detail,
-                    'stok': stok[i].value,
+            // simpan data stok ke array baru
+            for(let i=0; i<stokMasukElem.length; i++){
+                stokMasuk.push({
+                    'id_produk_detail': stokMasukElem[i].dataset.id_produk_detail,
+                    'stok': stokMasukElem[i].value,
                 })
             }
 
-            // simpan data harga ke array baru
-            for(let i=0; i<harga.length; i++){
-                hargaDetail.push({
-                    'id_produk_detail': harga[i].dataset.id_produk_detail,
-                    'harga': harga[i].value,
-                })
-            }
-
-            // simpan data berat ke array baru
-            for(let i=0; i<berat.length; i++){
-                beratDetail.push({
-                    'id_produk_detail': berat[i].dataset.id_produk_detail,
-                    'berat': berat[i].value,
+            // simpan data pemambahan stok ke array baru
+            for(let i=0; i<stokMasukElem.length; i++){
+                totalStok.push({
+                    'id_produk_detail': stokMasukElem[i].dataset.id_produk_detail,
+                    'stok': parseInt(stokMasukElem[i].value)+parseInt(stokElem[i].value),
                 })
             }
 
             let dataJson = {
                 'id': '{{$data_stok[0]->id_produk}}',
                 'nama_produk': namaProduk.value,
-                'stok': stokDetail,
-                'harga': hargaDetail,
-                'berat': beratDetail
+                'stok_masuk': stokMasuk,
+                'total_stok' :totalStok
             }
 
             // post request
             let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            fetch("/update_item/edit/{{$data_stok[0]->id_produk}}", {
+            fetch("/stok_masuk/add/{{$data_stok[0]->id_produk}}", {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json, text-plain, */*",

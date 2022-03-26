@@ -29,7 +29,13 @@
             <a href="{{route('category')}}" class="nav-link"><i class="bi bi-diagram-2"></i><span>Category</span></a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link"><i class="bi bi-arrow-repeat"></i><span>Kartu Stok</span></a>
+            <a href="{{route('stok_masuk')}}" class="nav-link"><i class="bi bi-box-arrow-in-left"></i></i><span>Stok Masuk</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('stok_keluar')}}" class="nav-link"><i class="bi bi-box-arrow-right"></i><span>Stok Hilang/Rusak</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('kartu_stok')}}" class="nav-link"><i class="bi bi-arrow-repeat"></i><span>Kartu Stok</span></a>
           </li>
 
           {{-- Promosi --}}

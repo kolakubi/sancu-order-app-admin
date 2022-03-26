@@ -29,6 +29,17 @@ class Order extends Model
             ->get();
     }
 
+    public function get_detail_by_id($id){
+        return $data = DB::table('order_details')
+            ->select('*')
+            ->join('produk_details', 'order_details.id_produk_detail', '=', 'produk_details.id')
+            ->join('produks', 'produk_details.id_produk', '=', 'produks.id')
+            ->join('categories', 'produks.id_category', '=', 'categories.id')
+            ->where('order_details.id_order', $id)
+            ->orderBy('produks.id_category')
+            ->get();
+    }
+
     public function get_agen_name($id){
         return $data = DB::table('orders')
             ->select('*')

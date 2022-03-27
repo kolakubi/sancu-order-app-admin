@@ -10,6 +10,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WhatsappController;
 use App\Http\Controllers\KartuStokController;
+use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\LogItemController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,15 +32,11 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::group(['middleware'=>'auth'], function(){
 
-    Route::get('/', function () {
-        return view('dashboard');
-    });
+    Route::get('/', [DashboardController::class, 'show'])->name('dashboard');
 
     Route::get('/item', [StokController::class, 'show_item'])->name('item');
     Route::get('/tambahitem', [StokController::class, 'show_tambah_item'])->name('tambah_item');
     Route::post('/tambahitem', [StokController::class, 'add_tambah_item']);
-
-    // Route::get('/update_item', [StokController::class, 'show'])->name('update_item');
     Route::get('/update_item/edit/{id}', [StokController::class, 'show_update_item']);
     Route::post('/update_item/edit/{id}', [StokController::class, 'update_edit_item']);
 
@@ -80,6 +79,11 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/coupon', [CouponController::class, 'show'])->name('coupon');
     Route::get('/coupon/add', [CouponController::class, 'add_coupon_show'])->name('add_coupon');
     Route::post('/coupon/add', [CouponController::class, 'add_coupon_create'])->name('add_coupon');
+
+    Route::get('/penjualan', [PenjualanController::class, 'show'])->name('penjualan');
+    Route::post('/penjualan', [PenjualanController::class, 'get_data_penjualan']);
+
+    Route::get('/log_item', [LogItemController::class, 'show'])->name('log_item');
 
     Route::get('/user', [UserController::class, 'show'])->name('user');
     Route::get('/user/add', [UserController::class, 'add_user_show'])->name('add_user');

@@ -48,7 +48,17 @@
             <a href="#" class="nav-link"><i class="bi bi-card-image"></i><span>Banner</span></a>
           </li>
 
-          {{-- Orders --}}
+          {{-- Laporan --}}
+          {{-- ------------- --}}
+          <li class="menu-header">Laporan</li>
+          <li class="nav-item">
+            <a href="{{route('penjualan')}}" class="nav-link"><i class="bi bi-bar-chart"></i><span>Penjualan</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('log_item')}}" class="nav-link"><i class="bi bi-stopwatch"></i><span>Log Item</span></a>
+          </li>
+
+          {{-- User --}}
           {{-- ------------- --}}
           <li class="menu-header">User</li>
           <li class="nav-item">

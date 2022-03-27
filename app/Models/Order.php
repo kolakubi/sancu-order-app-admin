@@ -76,4 +76,25 @@ class Order extends Model
             ->get();
     }
 
+    public function get_penjualan_by_date($tanggal_dari, $tanggal_sampai){
+        return $data = DB::table('orders')
+            ->select('*')
+            ->join('order_details', 'order_details.id_order', '=', 'orders.id')
+            ->join('produk_details', 'order_details.id_produk_detail', '=', 'produk_details.id')
+            ->join('produks', 'produk_details.id_produk', '=', 'produks.id')
+            ->whereDate('orders.created_at', '>=', $tanggal_dari)
+            ->whereDate('orders.created_at', '<=', $tanggal_sampai)
+            ->get();
+    }
+
+    public function get_penjualan_today($tanggal){
+        return $data = DB::table('orders')
+            ->select('*')
+            ->join('order_details', 'order_details.id_order', '=', 'orders.id')
+            ->join('produk_details', 'order_details.id_produk_detail', '=', 'produk_details.id')
+            ->join('produks', 'produk_details.id_produk', '=', 'produks.id')
+            ->whereDate('orders.created_at', '>=', $tanggal)
+            ->get();
+    }
+
 }

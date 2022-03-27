@@ -6,9 +6,26 @@
         <h1>{{$title}}</h1>
     </div>
 
+    <div class="row p-3">
+        <div class="col-4 text-center bg-white p-3">
+            <form method="post">
+                @csrf
+                <div class="mb-3">
+                  <label for="tanggaldari" class="form-label">Tanggal dari</label>
+                  <input type="date" class="form-control" id="tanggaldari" aria-describedby="tanggaldari" name="tanggaldari" required>
+                </div>
+                <div class="mb-3">
+                    <label for="tanggalsampai" class="form-label">sampai</label>
+                    <input type="date" class="form-control" id="tanggalsampai" aria-describedby="tanggalsampai" name="tanggalsampai" required>
+                  </div>
+                <button type="submit" class="btn btn-primary">Cek Pembelian</button>
+            </form>
+        </div>
+    </div>
+
     {{-- item terjual --}}
     <div class="row p-3 bg-white">
-        <div class="col-12"><h6 class="text-black">Item terjual hari ini</h6></div>
+        <div class="col-12"><h6 class="text-black">Item terjual</h6></div>
 
         {{-- sancu --}}
         <div class="col-2">
@@ -80,7 +97,7 @@
     {{-- pendapatan --}}
     <div class="row mt-3 p-3 bg-white">
         <div class="col-4">
-            <h6>Total penjualan hari ini</h6>
+            <h6>Total penjualan</h6>
             <div class="card bg-info">
                 <div class="card-header">
                     Penjualan
@@ -93,7 +110,7 @@
         </div>
 
         <div class="col-4">
-            <h6>Total order hari ini</h6>
+            <h6>Total Order</h6>
             <div class="card bg-light">
                 <div class="card-header">
                     Order

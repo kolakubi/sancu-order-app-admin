@@ -50,7 +50,7 @@
                                 {{$stok->size}}
                             </td>
                             <td>
-                                <input type="number" class="form-control stok" data-id_produk_detail="{{$stok->id_item_detail}}" value="{{$stok->jumlah_stok}}" required>
+                                <input type="number" class="form-control stok" data-id_produk_detail="{{$stok->id_item_detail}}" value="{{$stok->jumlah_stok}}" required readonly>
                             </td>
                             <td>
                                 <input type="number" class="form-control harga" data-id_produk_detail="{{$stok->id_item_detail}}" value="{{$stok->harga_produk}}" required>

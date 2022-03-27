@@ -6,6 +6,7 @@ use App\Models\Produk;
 use App\Models\Produk_detail;
 use App\Models\Category;
 use App\Models\Kartu_stok;
+use App\Models\Log_item;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\StokImport;
@@ -135,6 +136,17 @@ class StokController extends Controller
 
         // update harga
         foreach($request->harga as $harga){
+            // ambil harga sebelumnya
+            $harga_saat_ini = Produk_detail::where('id', $harga['id_produk_detail'])->first()->harga_produk;
+            // jika ada perubahan
+            // simpan ke log_items
+            if($harga_saat_ini != $harga['harga']){
+                Log_item::create([
+                    'id_produk_detail' => $harga['id_produk_detail'],
+                    'keterangan'=> 'perubahan harga dari '.$harga_saat_ini.' menjadi -> '.$harga['harga']
+                ]);
+            }
+
             Produk_detail::where('id', $harga['id_produk_detail'])
                 ->update(['harga_produk' => $harga['harga']]);
         }

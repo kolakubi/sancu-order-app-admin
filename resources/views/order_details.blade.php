@@ -1,7 +1,6 @@
 @extends('main')
 
 @section('content')
-    
 <div class="section-header">
     <h1>Orders # {{$id_order}} {{$agen->name}}</h1>
 </div>
@@ -32,19 +31,19 @@
 
         @php
             $asd = $order->id_category;
-            $sub_harga_per_category = 0;   
+            $sub_harga_per_category = 0;
         @endphp
 
         <div class="card card-info card-outline">
-            <div class="card-header">  
-                <h4>{{$order->nama_category}}</h4>
+            <div class="card-header" style="min-height: 0; padding: 10px 28px">  
+                <h4 class="text-dark">{{$order->nama_category}}</h4>
                 {{--  <br><a class="btn btn-warning" href="/ordersdetails/export">Export Excel Sancu</a> --}}
             </div>
             
             <div class="card-body">
-                <table class="table table-hover table-sm ">
+                <table class="table table-hover table-sm">
                     <thead class="bg-info text-white">
-                        <tr>
+                        <tr style="background-color: rgba(0,0,0,0.3)">
                             <th>No</th>
                             <th>Model</th>
                             <th>Size</th>
@@ -73,7 +72,7 @@
                 </table>
                 </div><!-- end card body -->
                 <div class="card-footer text-right border-top">
-                    <h6>
+                    <h6 class="text-dark">
                         Total Pembelian {{$order->nama_category}}:
                         <strong>
                             Rp{{number_format($sub_harga_per_category, '0', '.', ',')}}
@@ -91,7 +90,7 @@
             </table>
             </div><!-- end card body -->
             <div class="card-footer text-right border-top">
-                <h6>
+                <h6 class="text-dark">
                     Total Pembelian {{$order->nama_category}}:
                     <strong>
                         Rp{{number_format($sub_harga_per_category, '0', '.', ',')}}
@@ -115,12 +114,17 @@
     <div class="card-body">
         <table class="table table-sm table-striped">
             <tbody>
+                <tr>
+                    <td>Tanggal Order</td>
+                    <td>{{$tgl_order}}</td>
+                </tr>
                 {{-- batalkan pesanan --}}
                 @if($alamat->status == "1" || $alamat->status == "2")
                 <tr>
-                    <td>Batalkan Pesanan</td>
+                    <td style="width: 25%">Batalkan Pesanan</td>
                     <td>
-                        <a id="batalkan_order" data-idorder="{{$id_order}}" onclick="batalkan_pesanan(this)" href="#" class="btn btn-danger">Batalkan Pesanan</a>
+                        <a id="batalkan_order" data-idorder="{{$id_order}}" onclick="batalkan_pesanan(this)" href="#" class="btn btn-danger">Batalkan Pesanan</a><br>
+                        @if($selisih_hari > 3) <span class="text-danger text-bold pt-2">(Order sudah lebih dari 3 hari, silakan batalkan)</span>  @endif
                     </td>
                 </tr>
                 @endif
@@ -254,7 +258,7 @@
                 {{-- grand total --}}
                 <tr style="border-bottom: 2px solid black;">
                     <td>Grand Total</td>
-                    <td>
+                    <td class="text-dark">
                         : Rp
                             {{number_format(
                                 (
@@ -276,7 +280,6 @@
                                 , '0'
                             )
                         }}
-
                     </td>
                 </tr>
 

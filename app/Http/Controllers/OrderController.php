@@ -7,6 +7,7 @@ use App\Models\Config;
 use App\Models\Kartu_stok;
 use App\Models\Whatsapp;
 use Illuminate\Http\Request;
+use DateTime;
 
 class OrderController extends Controller
 {
@@ -33,7 +34,10 @@ class OrderController extends Controller
         $dataCoupon = Order::get_coupon_info($id);
         $dataAlamat = Order::get_alamat_kirim($id);
         $orders = Order::get_detail_by_id($id);
-        // dd($orders);
+        $tgl_order = Order::where('id', $id)->first()->created_at;
+        $tgl_sekarang = new DateTime();
+        $selisih_hari = $tgl_sekarang->diff($tgl_order)->format('%a');
+        // dd($selisih_hari);
 
         return view('order_details', [
             'title' => 'order detail',
@@ -43,7 +47,9 @@ class OrderController extends Controller
             'coupon' => $dataCoupon,
             'client_host' => $this->client_host,
             'alamat' => $dataAlamat,
-            'orders' => $orders
+            'orders' => $orders,
+            'tgl_order' => $tgl_order,
+            'selisih_hari' => $selisih_hari
         ]);
     }
 

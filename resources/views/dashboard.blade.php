@@ -79,6 +79,20 @@
 
     {{-- pendapatan --}}
     <div class="row mt-3 p-3 bg-white">
+
+        <div class="col-4">
+            <h6>Total item terjual Hari ini</h6>
+            <div class="card bg-warning">
+                <div class="card-header">
+                    Item
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{number_format($total_item, 0)}}</h3>
+                    <p class="card-text">pasang sandal</p>
+                </div>
+            </div>
+        </div>
+
         <div class="col-4">
             <h6>Total penjualan hari ini</h6>
             <div class="card bg-info">
@@ -93,7 +107,7 @@
         </div>
 
         <div class="col-4">
-            <h6>Total order hari ini</h6>
+            <h6>Total Order hari ini</h6>
             <div class="card bg-light">
                 <div class="card-header">
                     Order

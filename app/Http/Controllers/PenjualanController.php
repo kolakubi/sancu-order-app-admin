@@ -14,6 +14,7 @@ class PenjualanController extends Controller
         $item_pretty = 0;
         $item_xtreme = 0;
         $item_lainnya = 0;
+        $total_item = 0;
         $uang_penjualan = 0;
         $total_order = 0;
 
@@ -24,6 +25,7 @@ class PenjualanController extends Controller
             'item_pretty' => $item_pretty,
             'item_xtreme' => $item_xtreme,
             'item_lainnya' => $item_lainnya,
+            'total_item' => $total_item,
             'uang_penjualan' => $uang_penjualan,
             'total_order' => $total_order,
         ]);
@@ -35,6 +37,7 @@ class PenjualanController extends Controller
         $item_pretty = 0;
         $item_xtreme = 0;
         $item_lainnya = 0;
+        $total_item = 0;
         $uang_penjualan = 0;
         $total_order = 0;
 
@@ -42,6 +45,7 @@ class PenjualanController extends Controller
         foreach($data_penjualan as $penjualan){
             // uang penjualan
             $uang_penjualan += ($penjualan->harga_produk*$penjualan->jumlah_produk);
+            $total_item += $penjualan->jumlah_produk;
             // penjualan per item
             if($penjualan->id_category == 1){
                 $item_sancu += $penjualan->jumlah_produk;
@@ -70,6 +74,7 @@ class PenjualanController extends Controller
             'item_pretty' => $item_pretty,
             'item_xtreme' => $item_xtreme,
             'item_lainnya' => $item_lainnya,
+            'total_item' => $total_item,
             'uang_penjualan' => $uang_penjualan,
             'total_order' => $total_order,
         ]);

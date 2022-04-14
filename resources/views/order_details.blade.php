@@ -162,15 +162,41 @@
                 </tr>
 
                 {{-- alamat pengiriman --}}
-                <tr style="border-bottom: 2px solid black;">
-                    <td>Alamat pengiriman</td>
-                    <td>:
-                        {{$alamat->nama_lengkap}}<br>
-                        {{$alamat->telepon}}<br>
-                        {{$alamat->alamat_lengkap}}<br>
-                        {{$alamat->kecamatan}}, {{$alamat->kota_kabupaten}}, {{$alamat->propinsi}}, {{$alamat->kode_pos}}
-                    </td>
-                </tr>
+                @if($alamat->dropship)
+                    <tr style="border-top: 2px solid black;">
+                        <td>
+                            <button class="btn text-danger border-2 border-danger" style="font-size: 10px; text-transform: uppercase; font-weight: bold">Sebagai Dropship</button>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Alamat penerima</td>
+                        <td>:
+                            {{$alamat->dropship_nama}}<br>
+                            {{$alamat->dropship_telepon}}<br>
+                            {{$alamat->dropship_alamat}}
+                        </td>
+                    </tr>
+                    <tr style="border-bottom: 2px solid black;">
+                        <td>Alamat pengirim</td>
+                        <td>:
+                            {{$alamat->nama_lengkap}}<br>
+                            {{$alamat->telepon}}<br>
+                            {{$alamat->alamat_lengkap}}<br>
+                            {{$alamat->kecamatan}}, {{$alamat->kota_kabupaten}}, {{$alamat->propinsi}}, {{$alamat->kode_pos}}
+                        </td>
+                    </tr>
+                @else
+                    <tr style="border-bottom: 2px solid black;">
+                        <td>Alamat pengiriman</td>
+                        <td>:
+                            {{$alamat->nama_lengkap}}<br>
+                            {{$alamat->telepon}}<br>
+                            {{$alamat->alamat_lengkap}}<br>
+                            {{$alamat->kecamatan}}, {{$alamat->kota_kabupaten}}, {{$alamat->propinsi}}, {{$alamat->kode_pos}}
+                        </td>
+                    </tr>
+                @endif
 
                 {{-- ongkir --}}
                 <form action="{{ route('update_ongkir') }}" method="post" class="row">

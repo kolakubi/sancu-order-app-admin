@@ -18,14 +18,16 @@ class OrderDetailController extends Controller
         $agenName = Order::get_agen_name($id);
         $dataAlamat = Order::get_alamat_kirim($id);
         $orders = Order::get_detail_by_id($id);
-        // dd($dataAlamat);
+        $coupons = Order::get_coupon_info($id);
+        // dd($coupons);
 
         return view('print_detail_packing', [
             'title' => 'Resi pengiriman',
             'agen' => $agenName[0],
             'id_order' => $id,
             'alamat' => $dataAlamat,
-            'orders' => $orders
+            'orders' => $orders,
+            'coupons' => $coupons
         ]);
     }
 }

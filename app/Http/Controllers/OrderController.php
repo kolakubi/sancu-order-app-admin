@@ -37,7 +37,7 @@ class OrderController extends Controller
         $tgl_order = Order::where('id', $id)->first()->created_at;
         $tgl_sekarang = new DateTime();
         $selisih_hari = $tgl_sekarang->diff($tgl_order)->format('%a');
-        // dd($selisih_hari);
+        // dd($dataAlamat);
 
         return view('order_details', [
             'title' => 'order detail',

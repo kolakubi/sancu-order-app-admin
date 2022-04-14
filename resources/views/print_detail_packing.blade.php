@@ -44,24 +44,55 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-6">
-                        <table class="table table-sm">
-                            <tbody>
-                                <tr>
-                                    <th>Alamat</th>
-                                    <td>{{$alamat->alamat_lengkap}}, {{$alamat->kecamatan}}, {{$alamat->kota_kabupaten}}, {{$alamat->propinsi}}, {{$alamat->kode_pos}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Telepon</th>
-                                    <td>{{$alamat->telepon}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Ekspedisi</th>
-                                    <td>{{$alamat->ekspedisi}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    {{-- alamat --}}
+                    @if($alamat->dropship)
+                        <div class="col-6">
+                            <button class="btn text-danger border-2 border-danger" style="font-size: 10px; text-transform: uppercase; font-weight: bold">Sebagai Dropship</button>
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <th>Alamat penerima</th>
+                                        <td>{{$alamat->dropship_nama}}, {{$alamat->dropship_alamat}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Telepon penerima</th>
+                                        <td>{{$alamat->dropship_telepon}}</td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid black;">
+                                        <th>Alamat Pengirim</th>
+                                        <td>{{$alamat->alamat_lengkap}}, {{$alamat->kecamatan}}, {{$alamat->kota_kabupaten}}, {{$alamat->propinsi}}, {{$alamat->kode_pos}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Telepon pengirim</th>
+                                        <td>{{$alamat->telepon}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ekspedisi</th>
+                                        <td>{{$alamat->ekspedisi}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="col-6">
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <th>Alamat</th>
+                                        <td>{{$alamat->alamat_lengkap}}, {{$alamat->kecamatan}}, {{$alamat->kota_kabupaten}}, {{$alamat->propinsi}}, {{$alamat->kode_pos}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Telepon</th>
+                                        <td>{{$alamat->telepon}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ekspedisi</th>
+                                        <td>{{$alamat->ekspedisi}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="col-4 d-flex align-items-center justify-content-center">
@@ -92,7 +123,7 @@
                 @endphp
 
                 <div class="row">
-                    <h4 class="">{{$order->nama_category}}</h4>
+                    <h6 class="">{{$order->nama_category}}</h6>
                     <div class="col-12">
                         <table class="table table-sm table-bordered">
                             <thead style="background: rgba(0,0,0,0.1);">
@@ -112,6 +143,9 @@
             @php
                 $sub_harga_per_category += ($order->harga_produk*$order->jumlah_produk);
                 $sub_item_per_category += $order->jumlah_produk;
+                $total_jumlah_produk += $order->jumlah_produk;
+                $total_jumlah_harga += ($order->harga_produk*$order->jumlah_produk);
+                
             @endphp
 
             <tr>
@@ -164,6 +198,57 @@
         @endforeach
         {{-- end tes table dynamic table --}}
         {{-- ------------------------------------------------------------------------------------------------------------ --}}
+
+        <div class="row">
+            <h6>Detail Pesanan</h6>
+            <div class="col-4">
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Jumlah Item</strong></td>
+                        <td>: {{$total_jumlah_produk}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Pembelian</strong></td>
+                        <td>: Rp {{number_format($total_jumlah_harga, 0)}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ongkir</strong></td>
+                        <td>: Rp {{number_format($alamat->ongkir)}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Coupon</strong></td>
+                        <td>: {{$coupons != null ? $coupons->name : '-'}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Potongan Coupon</strong></td>
+                        <td>: ( Rp{{$coupons ? number_format($coupons->potongan*$total_jumlah_produk, 0) : '-'}} )</td>
+                    </tr>
+                    @if($alamat->potongan_harga_langsung)
+                        <tr>
+                            <td><strong>Potongan Harga Langsung</strong></td>
+                            <td>: Rp {{number_format($alamat->potongan_harga_langsung, 0)}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Keterangan</strong></td>
+                            <td>: {{$alamat->keterangan_potongan_harga_langsung}}</td>
+                        </tr>
+                    @endif
+                    
+                    <tr>
+                        <td><strong>Grand Total</strong></td>
+                        <td>: Rp 
+                            {{
+                                number_format((
+                                    $total_jumlah_harga+
+                                    $alamat->ongkir-
+                                    ($coupons ? $coupons->potongan*$total_jumlah_produk : 0)-
+                                    $alamat->potongan_harga_langsung
+                                ), 0)
+                            }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
         <div class="row mt-4">
             <p class="text-center"><span style="text-decoration: underline">Sancu Creative Indonesia</span><br>

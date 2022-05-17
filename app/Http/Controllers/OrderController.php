@@ -135,11 +135,17 @@ class OrderController extends Controller
         $detail_item = Order::get_order_item_detail($id_order);
         // update kartu stok
         foreach($detail_item as $item){
+
+            // update kartu stok
+            // ambil saldo stok terakhir
+            $data_saldo_terakhir = Kartu_stok::get_saldo_terakhir_kartu_stok($item->id_produk_detail);
+
             Kartu_stok::create([
                 'id_produk_detail' => $item->id_produk_detail,
                 'status' => 'in',
                 'jumlah' => $item->jumlah_produk,
                 'keterangan' => 'pembatalan order agen no #'.$item->id_order,
+                'saldo' => $data_saldo_terakhir + (int)$item->jumlah_produk
             ]);
 
             // update stok items

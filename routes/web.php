@@ -55,6 +55,9 @@ Route::group(['middleware'=>'auth'], function(){
     Route::post('/stok_keluar/add/{id}', [StokController::class, 'stok_keluar_add']);
 
     Route::get('/kartu_stok', [KartuStokController::class, 'kartu_stok_show'])->name('kartu_stok');
+    Route::post('/kartu_stok', [KartuStokController::class, 'kartu_stok_show_data']);
+    Route::get('/kartu_stok/get_produk', [KartuStokController::class, 'get_produk']);
+    Route::post('/kartu_stok/get_produk_size', [KartuStokController::class, 'get_produk_size']);
 
     Route::get('/orders', [OrderController::class, 'show'])->name('orders');
     Route::get('/orders/{id}', [OrderController::class, 'show_detail']);

@@ -68,13 +68,25 @@ class StokController extends Controller
         ]);
 
         foreach($produk_details as $produk_detail){
+            $id_produk_detail = $id_produk.''.$produk_detail->size;
+
+            // add produk_details
             Produk_detail::create([
-                'id' => $id_produk.''.$produk_detail->size,
+                'id' => $id_produk_detail,
                 'id_produk' => $id_produk,
                 'size' => $produk_detail->size,
                 'jumlah_stok' => $produk_detail->stok,
                 'harga_produk' => $produk_detail->harga,
                 'berat' => $produk_detail->berat
+            ]);
+
+            // add kartu_stoks
+            Kartu_stok::create([
+                'id_produk_detail' => $id_produk_detail,
+                'status' => 'in',
+                'jumlah' => $produk_detail->stok,
+                'keterangan' => 'input produk awal',
+                'saldo' => $produk_detail->stok
             ]);
         }
         // jika berhasil semua
@@ -183,6 +195,7 @@ class StokController extends Controller
         // dd($request->stok_masuk);
         // update stok
         foreach($request->total_stok as $total_stok){
+            // update stok
             Produk_detail::where('id', $total_stok['id_produk_detail'])
                 ->update(['jumlah_stok' => $total_stok['stok']]);
         }
@@ -191,11 +204,16 @@ class StokController extends Controller
         // jika data stok masuk > 0
         foreach($request->stok_masuk as $stok_masuk){
             if($stok_masuk['stok'] > 0){
+                // update kartu stok
+                // ambil saldo stok terakhir
+                $data_saldo_terakhir = Kartu_stok::get_saldo_terakhir_kartu_stok($stok_masuk['id_produk_detail']);
+
                 Kartu_stok::create([
                     'id_produk_detail' => $stok_masuk['id_produk_detail'],
                     'status' => 'in',
-                    'jumlah' => $stok_masuk['stok'],
-                    'keterangan' => 'Stok masuk'
+                    'jumlah' => (int)$stok_masuk['stok'],
+                    'keterangan' => 'penambahan stok manual',
+                    'saldo' => (int)$stok_masuk['stok'] + $data_saldo_terakhir
                 ]);
             }
         }
@@ -233,11 +251,14 @@ class StokController extends Controller
         // jika data stok masuk > 0
         foreach($request->stok_keluar as $stok_keluar){
             if($stok_keluar['stok'] > 0){
+                $data_saldo_terakhir = Kartu_stok::get_saldo_terakhir_kartu_stok($stok_keluar['id_produk_detail']);
+
                 Kartu_stok::create([
                     'id_produk_detail' => $stok_keluar['id_produk_detail'],
                     'status' => 'out',
-                    'jumlah' => $stok_keluar['stok'],
-                    'keterangan' => 'Stok Hilang/Rusak'
+                    'jumlah' => (int)$stok_keluar['stok'],
+                    'keterangan' => 'rusak / hilang',
+                    'saldo' => $data_saldo_terakhir - (int)$stok_keluar['stok']
                 ]);
             }
         }

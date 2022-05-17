@@ -90,6 +90,20 @@
                 })
             }
 
+            // jika pengurangan stok < 0
+            // tampilkan error
+            for(let i=0; i<stokKeluarELem.length; i++){
+                if((parseInt(stokElem[i].value)-parseInt(stokKeluarELem[i].value)) < 0){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Kesalahan',
+                        text: 'stok tidak boleh minus',
+                    });
+                    return false;
+                }
+            }
+
+
             // simpan data pemambahan stok ke array baru
             for(let i=0; i<stokKeluarELem.length; i++){
                 totalStok.push({

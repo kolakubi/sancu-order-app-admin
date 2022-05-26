@@ -82,6 +82,8 @@
         form.addEventListener('submit', (e)=>{
             e.preventDefault();
 
+            document.getElementById('mal-loading-overlay').style.display = 'flex';
+
             // simpan data stok ke array baru
             for(let i=0; i<stokMasukElem.length; i++){
                 stokMasuk.push({
@@ -123,6 +125,7 @@
             .then(data => {
 
             console.log(data);
+            document.getElementById('mal-loading-overlay').style.display = 'none';
 
                 // jika sukses
                 if(data.status == 200){

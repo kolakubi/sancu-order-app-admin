@@ -13,13 +13,13 @@
                 <div class="mb-3 form-group">
                     <label for="item" class="form-label">Item</label>
                     <select id="elem_produk" name="item" class="form-control">
-                        <option value="">- pilih item -</option>
+                        <option value="0">- pilih item -</option>
                     </select>
                 </div>
                 <div class="mb-3 form-group">
                     <label for="item" class="form-label">Size</label>
                     <select id="elem_size" name="id_produk_detail" class="form-control">
-                        <option value="">- pilih size -</option>
+                        <option value="0">- pilih size -</option>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -85,8 +85,6 @@
         .then(response => response.json())
         .then(produk => {
                 // console.log(produk);
-
-                elem_produk.innerHTML = '';
                 produk.forEach(element => {
                     elem_produk.innerHTML += 
                     '<option value="'+element.id+'">'+element.nama_produk+'</option>'             

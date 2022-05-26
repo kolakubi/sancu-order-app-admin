@@ -109,6 +109,8 @@
         let form = document.getElementById('tambah_produk_form');
         form.addEventListener('submit', (e)=>{
             e.preventDefault();
+
+            document.getElementById('mal-loading-overlay').style.display = 'flex';
             
             let namaProduk = document.getElementById('nama_produk').value;
             let kategori = document.getElementById('kategori').value;
@@ -135,7 +137,7 @@
             fd.append('kategori', kategori);
             fd.append('detail_data', JSON.stringify(detailData));
 
-            console.log(detailData);
+            // console.log(detailData);
 
             // post request
             let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -154,6 +156,7 @@
             .then(data => {
 
                 console.log(data);
+                document.getElementById('mal-loading-overlay').style.display = 'none';
 
                 // jika sukses
                 if(data.status == 200){

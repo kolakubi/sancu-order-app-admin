@@ -9,8 +9,8 @@ use App\Models\Order;
 
 class OrderDetailController extends Controller
 {
-    public function export_excel(){
-        return Excel::download(new UserExport, 'datauser.xlsx');
+    public function export_excel($id_order){
+        return Excel::download(new UserExport($id_order), 'data_export.xlsx');
     }
 
     public function print_detail_packing($id){

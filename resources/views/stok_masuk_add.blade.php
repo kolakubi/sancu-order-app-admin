@@ -59,6 +59,13 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                <div class="form-group row">
+                    <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="keterangan" class="form-control" id="keterangan" placeholder="keterangan">
+                    </div>
+                </div>
                 
                 <div class="form-group row">
                     <div class="col-sm-10">
@@ -77,6 +84,7 @@
         const namaProduk = document.getElementById('nama_produk');
         const stokElem = document.getElementsByClassName('stok');
         const stokMasukElem = document.getElementsByClassName('stok_masuk');
+        const keterangan = document.getElementById('keterangan');
         let stokMasuk = [];
         let totalStok = [];
         form.addEventListener('submit', (e)=>{
@@ -104,7 +112,8 @@
                 'id': '{{$data_stok[0]->id_produk}}',
                 'nama_produk': namaProduk.value,
                 'stok_masuk': stokMasuk,
-                'total_stok' :totalStok
+                'total_stok': totalStok,
+                'keterangan': keterangan.value
             }
 
             // post request

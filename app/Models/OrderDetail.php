@@ -10,6 +10,72 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
+    public static function get_order_per_item($id_order){
+        // ambil data item berdasarkan id_order
+        $items = DB::table('orders')
+            ->where('orders.id', $id_order)
+            ->join('order_details', 'orders.id', '=', 'order_details.id_order')
+            ->join('produk_details', 'order_details.id_produk_detail', '=', 'produk_details.id')
+            ->get();
+        
+        // tampung id produks ke array baru
+        $id_produk = [];
+        foreach($items as $item){
+            array_push($id_produk, $item->id_produk);
+        }
+
+        // hilangkan duplikat pada array $id_produk
+        $id_produk = array_values(array_unique($id_produk));
+
+        // ambil list produk_detail berdasarkan id_produk
+        $a = [];
+        $list_size_produk_diorder = [];
+        foreach($id_produk as $produk_single){
+            $a = DB::table('produk_details')
+                ->select('produk_details.id as id_produk_detail', 'produks.nama_produk', 'produk_details.size')
+                ->where('produk_details.id_produk', $produk_single)
+                ->join('produks', 'produk_details.id_produk', '=', 'produks.id')
+                ->get();
+            array_push($list_size_produk_diorder, $a);
+        }
+
+        // buat array baru untuk simpan detail pemesanan
+        $detail_order = [];
+        foreach($items as $item){
+            array_push($detail_order, [$item->id_produk_detail, $item->jumlah_produk]);
+        }
+
+        // tambah index 'pesanan' 0 di array
+        foreach($list_size_produk_diorder as $list_produk){
+            foreach($list_produk as $list_size){
+                $list_size->pesanan = "0";
+            }
+        }
+
+        // input order ke array $list_size_produk_diorder
+        // cek jika ada id_produk_detail
+        foreach($detail_order as $order){
+            $id_produk_detail = $order[0];
+            $jumlah_pesanan = $order[1];
+
+            // loop telusuri list size
+            // jika id_detail_produk sama
+            // push jumlah pesanan
+            foreach($list_size_produk_diorder as $list_produk){
+                foreach($list_produk as $list_size){
+                    if($list_size->id_produk_detail == $id_produk_detail){
+                        $list_size->pesanan = (string)$jumlah_pesanan;
+                    }
+                }
+            }
+        }
+        
+        // dd($list_size_produk_diorder);
+
+        // return data
+        return collect(json_decode(json_encode($list_size_produk_diorder), true));
+    }
+
     public static function get_order_detail_item_id($id){
         $itemArr = [
             // nama pembeli

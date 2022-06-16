@@ -61,6 +61,7 @@ Route::group(['middleware'=>'auth'], function(){
 
     Route::get('/orders', [OrderController::class, 'show'])->name('orders');
     Route::get('/orders/{id}', [OrderController::class, 'show_detail']);
+    Route::post('/orders/edit_alamat_dropship', [OrderController::class, 'edit_alamat_dropship']);
     // update ongkir
     Route::post('/orders/ongkir', [OrderController::class, 'update_ongkir'])->name('update_ongkir');
     Route::post('/orders/potongan_harga_langsung', [OrderController::class, 'update_potongan_harga_langsung'])->name('update_potongan_harga_langsung');
@@ -74,7 +75,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/printdetailpacking/{id}', [OrderDetailController::class, 'print_detail_packing']);
 
     // export excel
-    Route::get('/ordersdetails/export', [OrderDetailController::class, 'export_excel']);
+    Route::get('/ordersdetails/export/{id}', [OrderDetailController::class, 'export_excel']);
 
     Route::get('/stok/import', [StokController::class, 'import_stok_show'])->name('import_stok_show');
     Route::post('/stok/import', [StokController::class, 'import_stok_save']);

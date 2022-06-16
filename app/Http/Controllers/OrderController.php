@@ -159,4 +159,29 @@ class OrderController extends Controller
         ]);
     }
 
+    public function edit_alamat_dropship(Request $req){
+        // dd($req->orders_id);
+        $this->validate($req, [
+            'orders_id' => 'required', 
+            'nama_dropship' => 'required',
+            'telepon_dropship' => 'required',
+            'alamat_dropship' => 'required',
+        ]);
+
+        Order::where('id', $req->orders_id)
+            ->update([
+                'dropship_nama' => $req->nama_dropship,
+                'dropship_telepon' => $req->telepon_dropship,
+                'dropship_alamat' => $req->alamat_dropship
+            ]);
+
+        return redirect('/orders/'.$req->orders_id);
+
+        // return response()->json([
+        //     'status' => '200',
+        //     'detail' => 'success',
+        // ]);
+
+    }
+
 }

@@ -40,6 +40,9 @@
                     <span class="font-weight-bold @if($order->status == '5') text-success @elseif($order->status == '0') text-danger @else text-warning @endif">
                         {{$order->keterangan}}
                     </span>
+                    @if($order->dropship)
+                        <span>Dropship</span>
+                    @endif
                 </td>
                 <td>
                     <a href="{{$whatsapp_message}}" target="_blank" class="btn btn-success">

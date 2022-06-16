@@ -37,7 +37,6 @@
         <div class="card card-info card-outline">
             <div class="card-header" style="min-height: 0; padding: 10px 28px">  
                 <h4 class="text-dark">{{$order->nama_category}}</h4>
-                {{--  <br><a class="btn btn-warning" href="/ordersdetails/export">Export Excel Sancu</a> --}}
             </div>
             
             <div class="card-body">
@@ -118,6 +117,10 @@
                     <td>Tanggal Order</td>
                     <td>{{$tgl_order}}</td>
                 </tr>
+                <tr>
+                    <td>Export Detail Pesanan</td>
+                    <td><a class="btn btn-warning" href="/ordersdetails/export/{{$order->id_order}}">Export Excel</a></td>
+                </tr>
                 {{-- batalkan pesanan --}}
                 @if($alamat->status == "1" || $alamat->status == "2")
                 <tr>
@@ -162,12 +165,22 @@
                 </tr>
 
                 {{-- alamat pengiriman --}}
+                {{-- jika dropship --}}
                 @if($alamat->dropship)
                     <tr style="border-top: 2px solid black;">
                         <td>
                             <button class="btn text-danger border-2 border-danger" style="font-size: 10px; text-transform: uppercase; font-weight: bold">Sebagai Dropship</button>
                         </td>
                         <td></td>
+                    </tr>
+                    <tr>
+                        <td>Alamat pengirim</td>
+                        <td>:
+                            {{$alamat->nama_lengkap}}<br>
+                            {{$alamat->telepon}}<br>
+                            {{$alamat->alamat_lengkap}}<br>
+                            {{$alamat->kecamatan}}, {{$alamat->kota_kabupaten}}, {{$alamat->propinsi}}, {{$alamat->kode_pos}}
+                        </td>
                     </tr>
                     <tr>
                         <td>Alamat penerima</td>
@@ -178,12 +191,19 @@
                         </td>
                     </tr>
                     <tr style="border-bottom: 2px solid black;">
-                        <td>Alamat pengirim</td>
-                        <td>:
-                            {{$alamat->nama_lengkap}}<br>
-                            {{$alamat->telepon}}<br>
-                            {{$alamat->alamat_lengkap}}<br>
-                            {{$alamat->kecamatan}}, {{$alamat->kota_kabupaten}}, {{$alamat->propinsi}}, {{$alamat->kode_pos}}
+                        <td>Ganti Alamat penerima</td>
+                        <td>
+                            <form action="/orders/edit_alamat_dropship" method="post">
+                                @csrf
+                                <input type="hidden" name="orders_id" value="{{$id_order}}">
+                                <input class="form-control mb-2" name="nama_dropship" type="text" placeholder="Nama Penerima" required>
+                                @error('nama_dropship')<div class="alert alert-danger" role="alert">{{$message}}</div>@enderror
+                                <input class="form-control mb-2" name="telepon_dropship" type="text" placeholder="Telepon Penerima" required>
+                                @error('telepon_dropship')<div class="alert alert-danger" role="alert">{{$message}}</div>@enderror
+                                <input class="form-control mb-2" name="alamat_dropship" type="text" placeholder="Alamat Lengkap Penerima" required>
+                                @error('alamat_dropship')<div class="alert alert-danger" role="alert">{{$message}}</div>@enderror
+                                <button type="submit" class="btn btn-info mt-2" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>Ganti Penerima Dropship</button>
+                            </form>
                         </td>
                     </tr>
                 @else
@@ -233,7 +253,7 @@
                         <td></td>
                         <td>
                             <div class="col-auto">
-                                <button type="submit" class="btn btn-info" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>Update</button>
+                                <button type="submit" class="btn btn-info" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>Update Ongkir</button>
                             </div>     
                         </td>
                     </tr>
@@ -275,7 +295,7 @@
                         <td></td>
                         <td>
                             <div class="col-auto">
-                                <button type="submit" class="btn btn-info" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>Update</button>
+                                <button type="submit" class="btn btn-info" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>Update Potongan Harga</button>
                             </div>
                         </td>
                     </tr>

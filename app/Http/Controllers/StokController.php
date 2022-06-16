@@ -212,7 +212,7 @@ class StokController extends Controller
                     'id_produk_detail' => $stok_masuk['id_produk_detail'],
                     'status' => 'in',
                     'jumlah' => (int)$stok_masuk['stok'],
-                    'keterangan' => 'penambahan stok manual',
+                    'keterangan' => 'penambahan stok manual '.$request->keterangan,
                     'saldo' => (int)$stok_masuk['stok'] + $data_saldo_terakhir
                 ]);
             }
@@ -257,7 +257,7 @@ class StokController extends Controller
                     'id_produk_detail' => $stok_keluar['id_produk_detail'],
                     'status' => 'out',
                     'jumlah' => (int)$stok_keluar['stok'],
-                    'keterangan' => 'rusak / hilang',
+                    'keterangan' => 'rusak / hilang '.$request->keterangan,
                     'saldo' => $data_saldo_terakhir - (int)$stok_keluar['stok']
                 ]);
             }

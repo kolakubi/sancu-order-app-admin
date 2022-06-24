@@ -222,6 +222,7 @@
                 <form action="{{ route('update_ongkir') }}" method="post" class="row">
                     @csrf
                     <input type="hidden" name="orders_id" value="{{$id_order}}">
+                    <input type="hidden" name="user_id" value="{{$alamat->id_user}}">
                     <tr>
                         <td>Ongkir</td>
                         <td>
@@ -347,6 +348,7 @@
                         <form action="{{route('update_resi')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="orders_id" value="{{$id_order}}">
+                            <input type="hidden" name="user_id" value="{{$alamat->id_user}}">
                             <input class="form-control" type="file" name="file_resi" required @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
 
                             @error('file_resi')

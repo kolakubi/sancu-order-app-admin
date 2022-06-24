@@ -14,7 +14,9 @@
 <script type="text/javascript" src="/sancu_assets/datatables/datatables.min.js"></script>
 <script>
     const my_datatable = $('#my_datatable');
-    my_datatable.DataTable();
+    my_datatable.DataTable({
+        order: [[0, 'desc']]
+    });
 </script>
 
 <!-- JS Libraies -->

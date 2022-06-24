@@ -55,6 +55,9 @@
             <a href="{{route('penjualan')}}" class="nav-link"><i class="bi bi-bar-chart"></i><span>Penjualan</span></a>
           </li>
           <li class="nav-item">
+            <a href="{{route('penjualan_per_db')}}" class="nav-link"><i class="bi bi-person-lines-fill"></i><span>Penjualan Distributor</span></a>
+          </li>
+          <li class="nav-item">
             <a href="{{route('log_item')}}" class="nav-link"><i class="bi bi-stopwatch"></i><span>Log Item</span></a>
           </li>
 

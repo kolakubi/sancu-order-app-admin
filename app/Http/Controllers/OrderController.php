@@ -6,6 +6,7 @@ use App\Models\Order_detail;
 use App\Models\Config;
 use App\Models\Kartu_stok;
 use App\Models\Whatsapp;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use DateTime;
 
@@ -37,7 +38,7 @@ class OrderController extends Controller
         $tgl_order = Order::where('id', $id)->first()->created_at;
         $tgl_sekarang = new DateTime();
         $selisih_hari = $tgl_sekarang->diff($tgl_order)->format('%a');
-        // dd($dataAlamat);
+        // dd($agenName);
 
         return view('order_details', [
             'title' => 'order detail',
@@ -85,6 +86,16 @@ class OrderController extends Controller
                 ]
             );
         }
+
+        Notification::create([
+            'id_user' => $orders->user_id,
+            'id_order' => $orders->orders_id,
+            'tipe' => 3,
+            'content' => 'Pesanan di Proses',
+            'dilihat' => 0,
+            'trash' => 0
+        ]);
+
         return redirect()->back();
     } // end of function update_ongkir
 
@@ -118,6 +129,15 @@ class OrderController extends Controller
                 'resi'=> $file_path,
                 'status' => 4
             ]);
+
+        Notification::create([
+            'id_user' => $request->user_id,
+            'id_order' => $request->orders_id,
+            'tipe' => 4,
+            'content' => 'Pesanan telah dikirim',
+            'dilihat' => 0,
+            'trash' => 0
+        ]);
 
         return redirect('/orders');
     }

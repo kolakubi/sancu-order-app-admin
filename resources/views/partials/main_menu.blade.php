@@ -6,6 +6,11 @@
           </ul>
         </form>
         <ul class="navbar-nav navbar-right">
+          <li>
+            <a href="/notification" class="text-light" id="notif">
+              <i class="bi bi-envelope mr-1" style="font-size: 2em"></i>
+            </a>
+          </li>
           {{-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right">
               <div class="dropdown-header">Messages
@@ -151,5 +156,54 @@
               </a>
             </div>
           </li>
+          <li>
+            
+          </li>
         </ul>
       </nav>
+
+      <script>
+
+        // ambil jumlah notif yg belum terbaca
+        fetch("/notification/get_total_unread", {
+          headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json, text-plain, */*",
+              "X-Requested-With": "XMLHttpRequest",
+              // "X-CSRF-TOKEN": token
+              },
+          method: "GET", 
+          credentials: "same-origin"
+        })
+        .then(response => response.text())
+        .then(data =>{  
+          const notif = document.getElementById('notif');
+          if(data > 0){
+            notif.innerHTML = '<span class="badge badge-danger" >'+data+'</span><i class="bi bi-envelope mr-1" style="font-size: 2em"></i>';
+          }
+          
+        })
+
+        // tiap 10 detik
+        setInterval(() => {
+          fetch("/notification/get_total_unread", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                // "X-CSRF-TOKEN": token
+                },
+            method: "GET", 
+            credentials: "same-origin"
+          })
+          .then(response => response.text())
+          .then(data =>{  
+            const notif = document.getElementById('notif');
+            if(data > 0){
+              notif.innerHTML = '<span class="badge badge-danger" >'+data+'</span><i class="bi bi-envelope mr-1" style="font-size: 2em"></i>';
+            }
+            
+          })
+        }, 10000);
+        
+      </script>

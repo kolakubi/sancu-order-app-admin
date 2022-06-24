@@ -13,6 +13,7 @@ use App\Http\Controllers\KartuStokController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\LogItemController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,10 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::group(['middleware'=>'auth'], function(){
 
     Route::get('/', [DashboardController::class, 'show'])->name('dashboard');
+    
+    Route::get('/notification', [NotificationController::class, 'get_notifications'])->name('notification');
+    Route::get('/notification/read/{id}', [NotificationController::class, 'admin_read']);
+    Route::get('/notification/get_total_unread', [NotificationController::class, 'get_total_unread_admin']);
 
     Route::get('/item', [StokController::class, 'show_item'])->name('item');
     Route::get('/tambahitem', [StokController::class, 'show_tambah_item'])->name('tambah_item');
@@ -86,6 +91,9 @@ Route::group(['middleware'=>'auth'], function(){
 
     Route::get('/penjualan', [PenjualanController::class, 'show'])->name('penjualan');
     Route::post('/penjualan', [PenjualanController::class, 'get_data_penjualan']);
+    Route::get('/penjualan_per_db', [PenjualanController::class, 'show_penjualan_per_db'])->name('penjualan_per_db');
+    Route::get('/penjualan_per_db/get_db', [PenjualanController::class, 'get_db']);
+    Route::post('/penjualan_per_db', [PenjualanController::class, 'get_data_penjualan_per_db']);
 
     Route::get('/log_item', [LogItemController::class, 'show'])->name('log_item');
 

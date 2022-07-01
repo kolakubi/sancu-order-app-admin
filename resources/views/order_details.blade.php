@@ -5,6 +5,12 @@
     <h1>Orders # {{$id_order}} {{$agen->name}}</h1>
 </div>
 
+@if(session('add_berhasil'))
+    <div class="alert alert-success" role="alert">
+        {{ session('add_berhasil') }}
+    </div>
+@endif
+
 {{-- tes table dynamic table --}}
 
 @php

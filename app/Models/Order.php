@@ -12,7 +12,7 @@ class Order extends Model
 
     public function get_all(){
         return $dataOrder = DB::table('orders')
-            ->select('*', 'orders.id as orders_id')
+            ->select('*', 'orders.id as orders_id', 'orders.created_at as tanggal_order')
             ->join('users', 'orders.id_user', '=', 'users.id')
             ->join('status_pesanan', 'orders.status', '=', 'status_pesanan.id')
             ->orderBy('orders.id', 'desc')

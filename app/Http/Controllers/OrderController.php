@@ -96,7 +96,7 @@ class OrderController extends Controller
             'trash' => 0
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('add_berhasil', 'Data berhasil diinput');
     } // end of function update_ongkir
 
     public function update_potongan_harga_langsung(Request $request){
@@ -110,7 +110,7 @@ class OrderController extends Controller
                     'keterangan_potongan_harga_langsung' => $request->keterangan_potongan_harga_langsung
                 ]
             );
-        return redirect()->back();
+        return redirect()->back()->with('add_berhasil', 'Data berhasil diinput');
     }
 
     public function update_resi(Request $request){
@@ -139,7 +139,7 @@ class OrderController extends Controller
             'trash' => 0
         ]);
 
-        return redirect('/orders');
+        return redirect()->back()->with('add_berhasil', 'Data berhasil diinput');
     }
 
     public function order_batal(Request $request){

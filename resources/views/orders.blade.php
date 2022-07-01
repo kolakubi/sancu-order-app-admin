@@ -10,10 +10,16 @@
         <h1>Orders</h1>
     </div>
 
+    @if(session('add_berhasil'))
+        <div class="alert alert-success" role="alert">
+            {{ session('add_berhasil') }}
+        </div>
+    @endif
+
     <table class="table" id="my_datatable">
         <thead>
             <tr>
-                <th>No</th>
+                <th>id</th>
                 <th>Id Orders</th>
                 <th>Tanggal</th>
                 <th>DB</th>
@@ -30,11 +36,11 @@
             @endphp
 
             <tr>
-                <td>{{$loop->iteration}}</td>
+                <td>{{$order->orders_id}}</td>
                 <td>
                     <a href='/orders/{{$order->orders_id}}'>#{{$order->orders_id}} {{$order->name}}</a>
                 </td>
-                <td>{{$order->created_at}}</td>
+                <td>{{$order->tanggal_order}}</td>
                 <td>{{$order->name}}</td>
                 <td>
                     <span class="font-weight-bold @if($order->status == '5') text-success @elseif($order->status == '0') text-danger @else text-warning @endif">

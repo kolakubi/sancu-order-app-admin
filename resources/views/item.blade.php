@@ -8,7 +8,8 @@
 
     <div class="row mb-4">
         <div class="col-12">
-            <a class="btn btn-info" href="{{route('tambah_item')}}">Tambah Item +</a>
+            <a class="btn btn-info" href="{{route('tambah_item')}}">Tambah Item Sandal +</a>
+            <a class="btn btn-warning" href="{{route('tambah_item_pelengkap')}}">Tambah Item Pelengkap +</a>
         </div>
     </div>
 

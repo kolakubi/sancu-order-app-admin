@@ -11,6 +11,25 @@
     </div>
 @endif
 
+{{-- error ongkir --}}
+@error('ongkir')
+    <div class="alert alert-danger" role="alert">
+        {{$message}}
+    </div>
+@enderror
+@error('ekspedisi')
+<div class="alert alert-danger" role="alert">
+    {{$message}}
+</div>
+@enderror
+
+{{-- error upload resi --}}
+@error('file_resi')
+    <div class="alert alert-danger" role="alert">
+        {{$message}}
+    </div>
+@enderror
+
 {{-- tes table dynamic table --}}
 
 @php

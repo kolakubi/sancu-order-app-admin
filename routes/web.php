@@ -42,6 +42,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/item', [StokController::class, 'show_item'])->name('item');
     Route::get('/tambahitem', [StokController::class, 'show_tambah_item'])->name('tambah_item');
     Route::post('/tambahitem', [StokController::class, 'add_tambah_item']);
+    Route::get('/tambahitem_pelengkap', [StokController::class, 'show_tambah_item_pelengkap'])->name('tambah_item_pelengkap');
     Route::get('/update_item/edit/{id}', [StokController::class, 'show_update_item']);
     Route::post('/update_item/edit/{id}', [StokController::class, 'update_edit_item']);
 

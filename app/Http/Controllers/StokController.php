@@ -37,6 +37,14 @@ class StokController extends Controller
         ]);
     }
 
+    public function show_tambah_item_pelengkap(){
+        $categories = Category::all();
+        return view('tambah_item_pelengkap', [
+            'title' => 'Tambah Item Pelengkap',
+            'categories' => $categories
+        ]);
+    }
+
     public function add_tambah_item(Request $request){
         // isi detail_data
         // [

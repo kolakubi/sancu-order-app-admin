@@ -32,7 +32,7 @@
             @foreach($orders as $order)
 
             @php
-                $whatsapp_message = 'https://wa.me/'.$order->telepon.'?text='.'order nomor '.$order->orders_id.' '.$whatsapps[$order->status]->text.'. klik ->'.'https://dborder.officialsancu.com/profil/transaksi_detail/'.$order->orders_id
+                $whatsapp_message = 'https://web.whatsapp.com/send?phone='.$order->telepon.'&text='.'order nomor '.$order->orders_id.' '.$whatsapps[$order->status]->text.'. klik ->'.'https://vps1/profil/transaksi_detail/'.$order->orders_id
             @endphp
 
             <tr>

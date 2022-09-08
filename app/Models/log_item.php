@@ -14,7 +14,7 @@ class log_item extends Model
 
     public function get_all(){
         return $data_log = DB::table('log_items')
-            ->select('*')
+            ->select('*', 'log_items.id as id_log')
             ->join('produk_details', 'log_items.id_produk_detail', '=', 'produk_details.id')
             ->join('produks', 'produk_details.id_produk', '=', 'produks.id')
             ->join('categories', 'produks.id_category', '=', 'categories.id')

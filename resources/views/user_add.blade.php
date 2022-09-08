@@ -76,12 +76,12 @@
                                 Admin
                             </label>
                         </div>
-                        <div class="form-check">
+                        {{-- <div class="form-check">
                             <input class="form-check-input" type="radio" name="role" id="role2" value="reseller">
                             <label class="form-check-label" for="role2">
                                 Reseller
                             </label>
-                        </div>
+                        </div> --}}
                         <div class="form-check disabled">
                             <input class="form-check-input" type="radio" name="role" id="role3" value="db">
                             <label class="form-check-label" for="role3">

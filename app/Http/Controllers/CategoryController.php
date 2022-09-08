@@ -34,7 +34,8 @@ class CategoryController extends Controller
             return back()->with('error_nama', 'nama sudah diganakan');
         }
         Category::create([
-            'nama_category' => $request->nama_category
+            'nama_category' => $request->nama_category,
+            'id_admin' => auth()->user()->id
         ]);
         return redirect('/category')->with('add_berhasil', 'Data berhasil ditambah');
     }

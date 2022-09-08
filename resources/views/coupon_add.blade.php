@@ -61,12 +61,12 @@
                                 Nominal
                             </label>
                         </div>
-                        <div class="form-check disabled">
+                        {{-- <div class="form-check disabled">
                             <input class="form-check-input" type="radio" name="tipe_coupon" id="tipe_coupon3" value="persen" disabled>
                             <label class="form-check-label" for="tipe_coupon3">
                                 Persen
                             </label>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </fieldset>

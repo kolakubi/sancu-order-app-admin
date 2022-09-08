@@ -35,6 +35,13 @@
                     </div>
                 </div>
 
+                <div class="form-group row">
+                    <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="keterangan" class="form-control" id="keterangan" placeholder="keterangan">
+                    </div>
+                </div>
+
                 <table class="table text-center">
                     <thead>
                         <tr>
@@ -59,13 +66,6 @@
                         @endforeach
                     </tbody>
                 </table>
-
-                <div class="form-group row">
-                    <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="keterangan" class="form-control" id="keterangan" placeholder="keterangan">
-                    </div>
-                </div>
                 
                 <div class="form-group row">
                     <div class="col-sm-10">

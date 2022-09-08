@@ -10,7 +10,7 @@ class LogItemController extends Controller
     //
     public function show(){
         $data_log = Log_item::get_all();
-
+        
         return view('log_item', [
             'title' => 'Log Item',
             'data_log' => $data_log

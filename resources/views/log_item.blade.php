@@ -21,7 +21,7 @@
 
             @foreach($data_log as $item)
             <tr>
-                <td>{{$item->id}}</td>
+                <td>{{$item->id_log}}</td>
                 <td>{{$item->nama_produk}}</td>
                 <td>{{$item->size}}</td>
                 <td>{{$item->nama_category}}</td>

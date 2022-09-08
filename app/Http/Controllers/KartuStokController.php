@@ -30,7 +30,8 @@ class KartuStokController extends Controller
     }
 
     public function get_produk(){
-        $data_produk = Produk::all();
+        $data_produk = Produk::orderBy('nama_produk')
+            ->get();
         return $data_produk;
     }
 

@@ -72,7 +72,8 @@ class StokController extends Controller
             'id' => $id_produk,
             'nama_produk' => $request->nama_produk,
             'gambar_url_produk' => $file_path,
-            'id_category' => $request->kategori
+            'id_category' => $request->kategori,
+            'id_admin' => auth()->user()->id
         ]);
 
         foreach($produk_details as $produk_detail){
@@ -94,7 +95,8 @@ class StokController extends Controller
                 'status' => 'in',
                 'jumlah' => $produk_detail->stok,
                 'keterangan' => 'input produk awal',
-                'saldo' => $produk_detail->stok
+                'saldo' => $produk_detail->stok,
+                'id_admin' => auth()->user()->id
             ]);
         }
         // jika berhasil semua
@@ -163,7 +165,8 @@ class StokController extends Controller
             if($harga_saat_ini != $harga['harga']){
                 Log_item::create([
                     'id_produk_detail' => $harga['id_produk_detail'],
-                    'keterangan'=> 'perubahan harga dari '.$harga_saat_ini.' menjadi -> '.$harga['harga']
+                    'keterangan'=> 'perubahan harga dari '.$harga_saat_ini.' menjadi -> '.$harga['harga'],
+                    'id_admin' => auth()->user()->id
                 ]);
             }
 
@@ -221,7 +224,8 @@ class StokController extends Controller
                     'status' => 'in',
                     'jumlah' => (int)$stok_masuk['stok'],
                     'keterangan' => 'penambahan stok manual '.$request->keterangan,
-                    'saldo' => (int)$stok_masuk['stok'] + $data_saldo_terakhir
+                    'saldo' => (int)$stok_masuk['stok'] + $data_saldo_terakhir,
+                    'id_admin' => auth()->user()->id
                 ]);
             }
         }
@@ -265,8 +269,9 @@ class StokController extends Controller
                     'id_produk_detail' => $stok_keluar['id_produk_detail'],
                     'status' => 'out',
                     'jumlah' => (int)$stok_keluar['stok'],
-                    'keterangan' => 'rusak / hilang '.$request->keterangan,
-                    'saldo' => $data_saldo_terakhir - (int)$stok_keluar['stok']
+                    'keterangan' => 'stok keluar '.$request->keterangan,
+                    'saldo' => $data_saldo_terakhir - (int)$stok_keluar['stok'],
+                    'id_admin' => auth()->user()->id
                 ]);
             }
         }

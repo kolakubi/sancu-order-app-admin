@@ -45,7 +45,8 @@ class CouponController extends Controller
             'potongan' => $request->potongan,
             'masa_mulai' => $request->tanggal_dari,
             'masa_aktif' => $request->tanggal_sampai,
-            'tipe' =>$request->tipe_coupon
+            'tipe' =>$request->tipe_coupon,
+            'id_admin' => auth()->user()->id
         ]);
 
         return redirect('/coupon')->with('add_berhasil', 'Data coupon berhasil ditambah');

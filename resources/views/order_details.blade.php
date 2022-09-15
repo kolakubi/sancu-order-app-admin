@@ -39,6 +39,7 @@
     $total_berat = 0;
     $total_jumlah_produk = 0;
     $potongan_harga_langsung = (int)$alamat->potongan_harga_langsung;
+    $penambahan_harga_langsung = (int)$alamat->penambahan_harga_langsung;
 @endphp
 
 @foreach($orders as $key=>$order)
@@ -249,7 +250,7 @@
                     <input type="hidden" name="orders_id" value="{{$id_order}}">
                     <input type="hidden" name="user_id" value="{{$alamat->id_user}}">
                     <tr>
-                        <td>Ongkir</td>
+                        <td><h4>Ongkir</h4></td>
                         <td>
                             @error('ongkir')
                                 <div class="alert alert-danger" role="alert">
@@ -290,7 +291,7 @@
                     @csrf
                     <input type="hidden" name="orders_id" value="{{$id_order}}">
                     <tr>
-                        <td>Potongan harga langsung</td>
+                        <td><h4>Potongan harga langsung</h4></td>
                         <td>
                             @error('potongan_harga_langsung')
                                 <div class="alert alert-danger" role="alert">
@@ -313,7 +314,7 @@
                             @enderror
                             
                             <div class="col-8">
-                                <input type="text" placeholder="keterangan porongan harga..." value="{{$alamat->keterangan_potongan_harga_langsung}}" class="form-control" name="keterangan_potongan_harga_langsung" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
+                                <input type="text" placeholder="keterangan potongan harga..." value="{{$alamat->keterangan_potongan_harga_langsung}}" class="form-control" name="keterangan_potongan_harga_langsung" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
                             </div>
                         </td>
                     </tr>
@@ -327,9 +328,51 @@
                     </tr>
                 </form>
 
+                {{-- penambahan harga langsung --}}
+                <form action="{{ route('update_penambahan_harga_langsung') }}" method="post" class="row">
+                    @csrf
+                    <input type="hidden" name="orders_id" value="{{$id_order}}">
+                    <tr>
+                        <td><h4>Penambahan harga langsung</h4></td>
+                        <td>
+                            @error('penambahan_harga_langsung')
+                                <div class="alert alert-danger" role="alert">
+                                    {{$message}}
+                                </div>
+                            @enderror
+                            
+                            <div class="col-8">
+                                <input type="text" placeholder="Input penambahan harga" value="{{$penambahan_harga_langsung}}" class="form-control" name="penambahan_harga_langsung" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Keterangan</td>
+                        <td>
+                            @error('keterangan_penambahan_harga_langsung')
+                                <div class="alert alert-danger" role="alert">
+                                    {{$message}}
+                                </div>
+                            @enderror
+                            
+                            <div class="col-8">
+                                <input type="text" placeholder="keterangan penambahan harga..." value="{{$alamat->keterangan_penambahan_harga_langsung}}" class="form-control" name="keterangan_penambahan_harga_langsung" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom: 2px solid black;">
+                        <td></td>
+                        <td>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-info" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>Update Penambahan Harga</button>
+                            </div>
+                        </td>
+                    </tr>
+                </form>
+
                 {{-- grand total --}}
                 <tr style="border-bottom: 2px solid black;">
-                    <td>Grand Total</td>
+                    <td><h4>Grand Total</h4></td>
                     <td class="text-dark">
                         : Rp
                             {{number_format(
@@ -349,6 +392,8 @@
                                 )
                                 -
                                 $potongan_harga_langsung
+                                +
+                                $penambahan_harga_langsung
                                 , '0'
                             )
                         }}

@@ -53,7 +53,7 @@
                     <tbody id="mal_tbody">
                         <tr>
                             <td>
-                                <input type="text" class="form-control size" placeholder="size" required>
+                                <input type="text" maxlength="9" class="form-control size" placeholder="size" required>
                             </td>
                             <td>
                                 <input type="number" class="form-control stok" placeholder="stok" required>

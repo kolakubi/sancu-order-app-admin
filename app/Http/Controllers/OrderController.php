@@ -38,7 +38,7 @@ class OrderController extends Controller
         $tgl_order = Order::where('id', $id)->first()->created_at;
         $tgl_sekarang = new DateTime();
         $selisih_hari = $tgl_sekarang->diff($tgl_order)->format('%a');
-        // dd($agenName);
+        // dd($dataAlamat);
 
         return view('order_details', [
             'title' => 'order detail',
@@ -108,6 +108,20 @@ class OrderController extends Controller
                 [
                     'potongan_harga_langsung' => $request->potongan_harga_langsung,
                     'keterangan_potongan_harga_langsung' => $request->keterangan_potongan_harga_langsung
+                ]
+            );
+        return redirect()->back()->with('add_berhasil', 'Data berhasil diinput');
+    }
+
+    public function update_penambahan_harga_langsung(Request $request){
+        $this->validate($request, [
+            'penambahan_harga_langsung' => 'required|numeric|gt:0',
+        ]);
+        Order::where('id', $request->orders_id)
+            ->update(
+                [
+                    'penambahan_harga_langsung' => $request->penambahan_harga_langsung,
+                    'keterangan_penambahan_harga_langsung' => $request->keterangan_penambahan_harga_langsung
                 ]
             );
         return redirect()->back()->with('add_berhasil', 'Data berhasil diinput');

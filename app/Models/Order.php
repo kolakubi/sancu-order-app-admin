@@ -31,12 +31,13 @@ class Order extends Model
 
     public function get_detail_by_id($id){
         return $data = DB::table('order_details')
-            ->select('*')
+            ->select('*', 'order_details.created_at as tanggal_order')
             ->join('produk_details', 'order_details.id_produk_detail', '=', 'produk_details.id')
             ->join('produks', 'produk_details.id_produk', '=', 'produks.id')
             ->join('categories', 'produks.id_category', '=', 'categories.id')
             ->where('order_details.id_order', $id)
             ->orderBy('produks.id_category')
+            ->orderBy('order_details.id')
             ->get();
     }
 
@@ -82,6 +83,7 @@ class Order extends Model
             ->join('order_details', 'order_details.id_order', '=', 'orders.id')
             ->join('produk_details', 'order_details.id_produk_detail', '=', 'produk_details.id')
             ->join('produks', 'produk_details.id_produk', '=', 'produks.id')
+            ->where('orders.status', '>', '0')
             ->whereDate('orders.created_at', '>=', $tanggal_dari)
             ->whereDate('orders.created_at', '<=', $tanggal_sampai)
             ->get();

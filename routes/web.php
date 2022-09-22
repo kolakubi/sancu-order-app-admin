@@ -72,6 +72,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::post('/orders/ongkir', [OrderController::class, 'update_ongkir'])->name('update_ongkir');
     Route::post('/orders/potongan_harga_langsung', [OrderController::class, 'update_potongan_harga_langsung'])->name('update_potongan_harga_langsung');
     Route::post('/orders/penambahan_harga_langsung', [OrderController::class, 'update_penambahan_harga_langsung'])->name('update_penambahan_harga_langsung');
+    Route::post('/orders/update_keterangan_packing', [OrderController::class, 'update_keterangan_packing'])->name('update_keterangan_packing');
     Route::post('/orders/resi', [OrderController::class, 'update_resi'])->name('update_resi');
     Route::post('/orders/batal', [OrderController::class, 'order_batal']);
 

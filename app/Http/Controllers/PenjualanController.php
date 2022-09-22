@@ -43,6 +43,7 @@ class PenjualanController extends Controller
         $total_order = 0;
 
         $data_penjualan = Order::get_penjualan_by_date($request->tanggaldari, $request->tanggalsampai);
+        // dd($data_penjualan);
         foreach($data_penjualan as $penjualan){
             // uang penjualan
             $uang_penjualan += ($penjualan->harga_produk*$penjualan->jumlah_produk);

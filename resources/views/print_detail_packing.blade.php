@@ -18,6 +18,7 @@
         .container{
             max-width: 900px;
         }
+        
     </style>
 </head>
 <body>
@@ -35,7 +36,7 @@
                                 </tr>
                                 <tr>
                                     <th>Tanggal</th>
-                                    <td>{{$orders[0]->created_at}}</td>
+                                    <td>{{$orders[0]->tanggal_order}}</td>
                                 </tr>
                                 <tr>
                                     <th>Nama</th>
@@ -126,7 +127,7 @@
                     <h6 class="">{{$order->nama_category}}</h6>
                     <div class="col-12">
                         <table class="table table-sm table-bordered">
-                            <thead style="background: rgba(0,0,0,0.1);">
+                            {{-- <thead style="background: rgba(0,0,0,0.1);"> --}}
                                 <tr>
                                     <th>No</th>
                                     <th>Model</th>
@@ -136,7 +137,7 @@
                                     <th>Check 1</th>
                                     <th>Check 2</th>
                                 </tr>
-                            </thead>
+                            {{-- </thead> --}}
                             <tbody>
             @endif
 
@@ -203,6 +204,10 @@
             <h6>Detail Pesanan</h6>
             <div class="col-4">
                 <table class="table table-sm">
+                    <tr>
+                        <td><strong>Keterangan Tambahan</strong></td>
+                        <td>: {{$agen->keterangan_packing}}</td>
+                    </tr>
                     <tr>
                         <td><strong>Jumlah Item</strong></td>
                         <td>: {{$total_jumlah_produk}}</td>

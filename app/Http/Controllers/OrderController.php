@@ -127,6 +127,19 @@ class OrderController extends Controller
         return redirect()->back()->with('add_berhasil', 'Data berhasil diinput');
     }
 
+    public function update_keterangan_packing(Request $request){
+        $this->validate($request, [
+            'keterangan_packing' => 'required',
+        ]);
+        Order::where('id', $request->orders_id)
+            ->update(
+                [
+                    'keterangan_packing' => $request->keterangan_packing,
+                ]
+            );
+        return redirect()->back()->with('add_berhasil', 'Data berhasil diinput');
+    }
+
     public function update_resi(Request $request){
         // ddd($request);
 

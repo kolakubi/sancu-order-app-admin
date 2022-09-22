@@ -370,6 +370,34 @@
                     </tr>
                 </form>
 
+                {{-- Keterangan Packing --}}
+                <form action="{{ route('update_keterangan_packing') }}" method="post" class="row">
+                    @csrf
+                    <input type="hidden" name="orders_id" value="{{$id_order}}">
+                    <tr>
+                        <td><h4>Keterangan Packing</h4></td>
+                        <td>
+                            @error('keterangan_packing')
+                                <div class="alert alert-danger" role="alert">
+                                    {{$message}}
+                                </div>
+                            @enderror
+                            
+                            <div class="col-8">
+                                <textarea placeholder="keterangan packing..." rows="5" class="form-control" name="keterangan_packing" @if($agen->status == '5' || $agen->status == '0') disabled  @endif style="height: auto;">{{$alamat->keterangan_packing}}</textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom: 2px solid black;">
+                        <td></td>
+                        <td>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-info" @if($agen->status == '5' || $agen->status == '0') disabled  @endif>Update Keterangan Packing</button>
+                            </div>
+                        </td>
+                    </tr>
+                </form>
+
                 {{-- grand total --}}
                 <tr style="border-bottom: 2px solid black;">
                     <td><h4>Grand Total</h4></td>

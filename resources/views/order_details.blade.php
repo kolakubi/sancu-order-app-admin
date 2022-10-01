@@ -243,6 +243,12 @@
                         </td>
                     </tr>
                 @endif
+                <tr style="border-bottom: 2px solid black;">
+                    <td><h4>Pesan Dari Agen<h4></td>
+                    <td>:
+                        {{$alamat->keterangan_agen}}
+                    </td>
+                </tr>
 
                 {{-- ongkir --}}
                 <form action="{{ route('update_ongkir') }}" method="post" class="row">
@@ -427,6 +433,14 @@
                         }}
                     </td>
                 </tr>
+                {{-- Pesanan Selesai --}}
+                <tr style="border-bottom: 2px solid black;">
+                    <td><h4 class="text-success">Pesanan Selesai<h4></td>
+                    <td>: silakan klik tombol di bawah Jika Pesanan Telah Selesai
+                        <br>
+                        <a id="pesanan_selesai" data-idorder="{{$id_order}}" onclick="pesanan_selesai(this)" href="#" class="btn btn-success">Pesanan Telah Selesai</a>
+                    </td>
+                </tr>
 
                 {{-- Bukti pembayaran --}}
                 @if($agen->status >= '3')
@@ -495,6 +509,51 @@
             if (result.isConfirmed) {
                 // ajax ke pengecekan stok
                 fetch("/orders/batal", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                        },
+                    method: "POST", 
+                    credentials: "same-origin",
+                    body: idPesanan
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    if(data.status == '200'){
+                        Swal.fire('Saved!', '', 'success')
+                        .then((result)=>{
+                            location.reload();
+                        })
+                    }
+                    else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ada kesalahan',
+                        })
+                    }
+                    console.log(data);
+                })
+            }
+        })
+    }
+
+    function pesanan_selesai(elem){
+        elem.preventDevault;
+        let idPesanan = elem.dataset.idorder;
+
+        Swal.fire({
+            icon: 'question',
+            title: 'Yakin pesanan ini sudah selesai?',
+            showDenyButton: true,
+            confirmButtonText: 'Ya',
+            denyButtonText: `Tidak`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // ajax ke pengecekan stok
+                fetch("/orders/selesai", {
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json, text-plain, */*",

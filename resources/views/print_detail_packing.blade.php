@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <style>
         body{
-            font-size: 10px!important;
+            font-size: 11px!important;
+            font-weight: bold!important;
+            color: #000!important;
         }
         .container{
             max-width: 900px;
@@ -202,7 +204,7 @@
 
         <div class="row">
             <h6>Detail Pesanan</h6>
-            <div class="col-4">
+            <div class="col-6">
                 <table class="table table-sm">
                     <tr>
                         <td><strong>Keterangan Tambahan</strong></td>
@@ -220,6 +222,10 @@
                         <td><strong>Ongkir</strong></td>
                         <td>: Rp {{number_format($alamat->ongkir)}}</td>
                     </tr>
+                </table>
+            </div>
+            <div class="col-6">
+                <table class="table table-sm">
                     <tr>
                         <td><strong>Coupon</strong></td>
                         <td>: {{$coupons != null ? $coupons->name : '-'}}</td>
@@ -241,7 +247,7 @@
                     
                     <tr>
                         <td><strong>Grand Total</strong></td>
-                        <td>: Rp 
+                        <td><strong>: Rp 
                             {{
                                 number_format((
                                     $total_jumlah_harga+
@@ -249,7 +255,8 @@
                                     ($coupons ? $coupons->potongan*$total_jumlah_produk : 0)-
                                     $alamat->potongan_harga_langsung
                                 ), 0)
-                            }}</td>
+                            }}
+                        <strong></td>
                     </tr>
                 </table>
             </div>

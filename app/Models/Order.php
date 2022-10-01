@@ -37,6 +37,8 @@ class Order extends Model
             ->join('categories', 'produks.id_category', '=', 'categories.id')
             ->where('order_details.id_order', $id)
             ->orderBy('produks.id_category')
+            ->orderBy('produks.nama_produk')
+            ->orderBy('produk_details.size')
             ->orderBy('order_details.id')
             ->get();
     }

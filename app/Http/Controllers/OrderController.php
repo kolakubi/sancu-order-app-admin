@@ -206,6 +206,22 @@ class OrderController extends Controller
         ]);
     }
 
+    public function order_selesai(Request $request){
+
+        $id_order = $request[0];
+        // update status order
+        // jadi 0
+        Order::where('id', $id_order)
+            ->update([
+                'status' => 5
+            ]);
+
+        return response()->json([
+            'status' => '200',
+            'detail' => 'success',
+        ]);
+    }
+
     public function edit_alamat_dropship(Request $req){
         // dd($req->orders_id);
         $this->validate($req, [

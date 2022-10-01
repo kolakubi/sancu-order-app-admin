@@ -75,6 +75,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::post('/orders/update_keterangan_packing', [OrderController::class, 'update_keterangan_packing'])->name('update_keterangan_packing');
     Route::post('/orders/resi', [OrderController::class, 'update_resi'])->name('update_resi');
     Route::post('/orders/batal', [OrderController::class, 'order_batal']);
+    Route::post('/orders/selesai', [OrderController::class, 'order_selesai']);
 
     Route::get('/whatsapp', [WhatsappController::class, 'show'])->name('whatsapp');
     Route::post('/whatsapp', [WhatsappController::class, 'update']);

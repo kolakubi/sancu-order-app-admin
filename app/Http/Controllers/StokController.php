@@ -54,6 +54,7 @@ class StokController extends Controller
         $this->validate($request, [
             'nama_produk' => 'required|max:255',
             'kategori' => 'required|max:255',
+            'satuan' => 'required',
             'file' => 'required|image',
             'detail_data' => 'required'
         ]);
@@ -71,6 +72,7 @@ class StokController extends Controller
         Produk::create([
             'id' => $id_produk,
             'nama_produk' => $request->nama_produk,
+            'satuan' => $request->satuan,
             'gambar_url_produk' => $file_path,
             'id_category' => $request->kategori,
             'id_admin' => auth()->user()->id
@@ -147,7 +149,8 @@ class StokController extends Controller
         // update attribut lain
         Produk::where('id', $request->id)
             ->update([
-                'nama_produk' => $request->nama_produk
+                'nama_produk' => $request->nama_produk,
+                'satuan' => $request->satuan
             ]);
 
         // update stok

@@ -45,7 +45,7 @@
 @foreach($orders as $key=>$order)
 
     @php
-        $total_jumlah_harga += ($order->harga_produk*$order->jumlah_produk);
+        $total_jumlah_harga += ($order->harga_saat_order*$order->jumlah_produk);
         $total_jumlah_produk += $order->jumlah_produk;
         $total_berat += ($order->berat*$order->jumlah_produk);
     @endphp
@@ -79,14 +79,14 @@
                     <tbody>
     @endif
         @php
-            $sub_harga_per_category += ($order->harga_produk*$order->jumlah_produk);
+            $sub_harga_per_category += ($order->harga_saat_order*$order->jumlah_produk);
         @endphp
         <tr>
             <td>{{$loop->iteration}}</td>
             <td>{{$order->nama_produk}}</td>
             <td>{{$order->size}}</td>
             <td>{{$order->jumlah_produk}}</td>
-            <td>Rp{{ number_format($order->jumlah_produk*$order->harga_produk, 0, '.', ',')}}</td>
+            <td>Rp{{ number_format($order->jumlah_produk*$order->harga_saat_order, 0, '.', ',')}}</td>
         </tr>
 
         {{-- jika index berikutnya sudah berbeda id --}}

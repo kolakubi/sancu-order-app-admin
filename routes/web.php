@@ -14,6 +14,7 @@ use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\LogItemController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProdukController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,9 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/tambahitem_pelengkap', [StokController::class, 'show_tambah_item_pelengkap'])->name('tambah_item_pelengkap');
     Route::get('/update_item/edit/{id}', [StokController::class, 'show_update_item']);
     Route::post('/update_item/edit/{id}', [StokController::class, 'update_edit_item']);
+
+    Route::post('/produk/hapus', [ProdukController::class, 'hapus_produk']);
+    Route::post('/produk/tampilkan', [ProdukController::class, 'tampilkan_produk']);
 
     Route::get('/category', [CategoryController::class, 'show'])->name('category');
     Route::get('/category/add', [CategoryController::class, 'show_add'])->name('add_category');

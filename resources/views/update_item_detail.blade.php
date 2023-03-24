@@ -25,6 +25,18 @@
                     </div>
                 </div>
 
+                {{-- Satuan --}}
+                <div class="form-group row">
+                    <label for="satuan" class="col-sm-3 col-form-label">*Satuan</label>
+                    <div class="col-sm-9">
+                        <select class="custom-select" id="satuan" name="satuan" required>
+                            <option value="pack" @if($data_stok[0]->satuan == 'pack') selected @endif>Pack</option>
+                            <option value="psg" @if($data_stok[0]->satuan == 'psg') selected @endif>Pasang</option>
+                            <option value="series" @if($data_stok[0]->satuan == 'series') selected @endif>Series</option>
+                          </select>
+                    </div>
+                </div>
+
                 {{-- gambar produk --}}
                 <div class="form-group row">
                     <label for="nama_produk" class="col-sm-3 col-form-label">Gambar produk</label>
@@ -87,6 +99,8 @@
         form.addEventListener('submit', (e)=>{
             e.preventDefault();
 
+            const satuan = document.getElementById('satuan').value;
+
             document.getElementById('mal-loading-overlay').style.display = 'flex';
 
             // simpan data size ke array baru
@@ -116,6 +130,7 @@
             let dataJson = {
                 'id': '{{$data_stok[0]->id_produk}}',
                 'nama_produk': namaProduk.value,
+                'satuan': satuan,
                 'stok': stokDetail,
                 'harga': hargaDetail,
                 'berat': beratDetail

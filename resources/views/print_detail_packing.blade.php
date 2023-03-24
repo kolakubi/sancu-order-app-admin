@@ -144,10 +144,10 @@
             @endif
 
             @php
-                $sub_harga_per_category += ($order->harga_produk*$order->jumlah_produk);
+                $sub_harga_per_category += ($order->harga_saat_order*$order->jumlah_produk);
                 $sub_item_per_category += $order->jumlah_produk;
                 $total_jumlah_produk += $order->jumlah_produk;
-                $total_jumlah_harga += ($order->harga_produk*$order->jumlah_produk);
+                $total_jumlah_harga += ($order->harga_saat_order*$order->jumlah_produk);
                 
             @endphp
 
@@ -156,7 +156,7 @@
                 <td>{{$order->nama_produk}}</td>
                 <td>{{$order->size}}</td>
                 <td>{{$order->jumlah_produk}}</td>
-                <td>Rp {{number_format($order->harga_produk*$order->jumlah_produk, 0)}}</td>
+                <td>Rp {{number_format($order->harga_saat_order*$order->jumlah_produk, 0)}}</td>
                 <td><i class="bi bi-square"></i></td>
                 <td><i class="bi bi-square"></i></td>
             </tr>
@@ -222,10 +222,6 @@
                         <td><strong>Ongkir</strong></td>
                         <td>: Rp {{number_format($alamat->ongkir)}}</td>
                     </tr>
-                </table>
-            </div>
-            <div class="col-6">
-                <table class="table table-sm">
                     <tr>
                         <td><strong>Coupon</strong></td>
                         <td>: {{$coupons != null ? $coupons->name : '-'}}</td>
@@ -234,6 +230,10 @@
                         <td><strong>Potongan Coupon</strong></td>
                         <td>: ( Rp{{$coupons ? number_format($coupons->potongan*$total_jumlah_produk, 0) : '-'}} )</td>
                     </tr>
+                </table>
+            </div>
+            <div class="col-6">
+                <table class="table table-sm">
                     @if($alamat->potongan_harga_langsung)
                         <tr>
                             <td><strong>Potongan Harga Langsung</strong></td>
@@ -242,6 +242,16 @@
                         <tr>
                             <td><strong>Keterangan</strong></td>
                             <td>: {{$alamat->keterangan_potongan_harga_langsung}}</td>
+                        </tr>
+                    @endif
+                    @if($alamat->penambahan_harga_langsung)
+                        <tr>
+                            <td><strong>Penambahan Harga Langsung</strong></td>
+                            <td>: Rp {{number_format($alamat->penambahan_harga_langsung, 0)}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Keterangan</strong></td>
+                            <td>: {{$alamat->keterangan_penambahan_harga_langsung}}</td>
                         </tr>
                     @endif
                     
@@ -253,7 +263,8 @@
                                     $total_jumlah_harga+
                                     $alamat->ongkir-
                                     ($coupons ? $coupons->potongan*$total_jumlah_produk : 0)-
-                                    $alamat->potongan_harga_langsung
+                                    $alamat->potongan_harga_langsung+
+                                    $alamat->penambahan_harga_langsung
                                 ), 0)
                             }}
                         <strong></td>

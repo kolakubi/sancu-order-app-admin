@@ -31,7 +31,7 @@ class Order extends Model
 
     public function get_detail_by_id($id){
         return $data = DB::table('order_details')
-            ->select('*', 'order_details.created_at as tanggal_order')
+            ->select('*', 'order_details.created_at as tanggal_order', 'order_details.harga_produk as harga_saat_order')
             ->join('produk_details', 'order_details.id_produk_detail', '=', 'produk_details.id')
             ->join('produks', 'produk_details.id_produk', '=', 'produks.id')
             ->join('categories', 'produks.id_category', '=', 'categories.id')

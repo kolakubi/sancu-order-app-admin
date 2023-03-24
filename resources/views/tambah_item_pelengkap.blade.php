@@ -33,6 +33,18 @@
                     </div>
                 </div>
 
+                {{-- Satuan --}}
+                <div class="form-group row">
+                    <label for="satuan" class="col-sm-3 col-form-label">*Satuan</label>
+                    <div class="col-sm-9">
+                        <select class="custom-select" id="satuan" name="satuan" required>
+                            <option value="pack" selected>Pack</option>
+                            <option value="psg">Pasang</option>
+                            <option value="series">Series</option>
+                          </select>
+                    </div>
+                </div>
+
                 {{-- thumbnail --}}
                 <div class="form-group row">
                     <label for="nama_produk" class="col-sm-3 col-form-label">*Thumbnail</label>
@@ -114,6 +126,7 @@
             
             let namaProduk = document.getElementById('nama_produk').value;
             let kategori = document.getElementById('kategori').value;
+            let satuan = document.getElementById('satuan').value;
             let size = document.getElementsByClassName('size');
             let stok = document.getElementsByClassName('stok');
             let harga = document.getElementsByClassName('harga');
@@ -135,6 +148,7 @@
             fd.append('file', fileThumb.files[0]);
             fd.append('nama_produk', namaProduk);
             fd.append('kategori', kategori);
+            fd.append('satuan', satuan);
             fd.append('detail_data', JSON.stringify(detailData));
 
             // console.log(detailData);
